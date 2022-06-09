@@ -3,17 +3,7 @@
 #include "FigureMoves.h"
 
 
-Bishop::Bishop(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Bishop, color, pos, board) {
-	sprite.setTexture(Figure::texture);
-	switch (color) {
-	case Figure::Color::Black:
-		sprite.setTextureRect(sf::IntRect(56 * 2, 0, 56, 56));
-		break;
-	case Figure::Color::White:
-		sprite.setTextureRect(sf::IntRect(56 * 2, 56, 56, 56));
-		break;
-	}
-}
+Bishop::Bishop(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Bishop, color, pos, board) {}
 
 std::unique_ptr<Figure> Bishop::clone() const {
 	return std::make_unique<Bishop>(this->getColor(), getPosition(), board);
@@ -32,6 +22,15 @@ bool Bishop::canAttack(sf::Vector2i newpos) const
 	return false;
 }
 void Bishop::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(sprite, states);
+	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
 
+	switch (getColor()) {
+	case Figure::Color::Black:
+		sprite.setTextureRect(sf::IntRect(56 * 2, 0, 56, 56));
+		break;
+	case Figure::Color::White:
+		sprite.setTextureRect(sf::IntRect(56 * 2, 56, 56, 56));
+		break;
+	}
+	target.draw(sprite, states);
 }

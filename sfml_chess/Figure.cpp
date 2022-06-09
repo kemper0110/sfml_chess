@@ -3,9 +3,7 @@
 
 #include "FigureMoves.h"
 
-Figure::Figure(Type type, Color color, sf::Vector2i pos, Board& board) : type(type), color(color), pos(pos), board(board) {
-	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
-}
+Figure::Figure(Type type, Color color, sf::Vector2i pos, Board& board) : type(type), color(color), pos(pos), board(board){}
 Figure::Type Figure::getType() const {
 	return type;
 }
@@ -43,10 +41,16 @@ bool Figure::canAttack(sf::Vector2i newpos) const
 }
 
 void Figure::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(sprite, states);
+	//target.draw(sprite, states);
 }
 
 bool Figure::loadTexture() {
 	constexpr auto filename = "figures.png";
 	return texture.loadFromFile(filename);
+}
+
+bool Figure::loadSprite()
+{
+	sprite.setTexture(texture);
+	return true;
 }

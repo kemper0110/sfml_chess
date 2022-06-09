@@ -4,17 +4,7 @@
 #include "Board.h"
 
 
-King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::King, color, pos, board) {
-	sprite.setTexture(Figure::texture);
-	switch (color) {
-	case Figure::Color::Black:
-		sprite.setTextureRect(sf::IntRect(56 * 4, 0, 56, 56));
-		break;
-	case Figure::Color::White:
-		sprite.setTextureRect(sf::IntRect(56 * 4, 56, 56, 56));
-		break;
-	}
-}
+King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::King, color, pos, board) {}
 
 std::unique_ptr<Figure> King::clone() const {
 	return std::make_unique<King>(this->getColor(), getPosition(), board);
@@ -53,5 +43,15 @@ bool King::canAttack(sf::Vector2i newpos) const
 	return false;
 }
 void King::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
+
+	switch (getColor()) {
+	case Figure::Color::Black:
+		sprite.setTextureRect(sf::IntRect(56 * 4, 0, 56, 56));
+		break;
+	case Figure::Color::White:
+		sprite.setTextureRect(sf::IntRect(56 * 4, 56, 56, 56));
+		break;
+	}
 	target.draw(sprite, states);
 }

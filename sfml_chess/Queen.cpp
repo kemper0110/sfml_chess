@@ -2,17 +2,7 @@
 
 #include "FigureMoves.h"
 
-Queen::Queen(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Queen, color, pos, board) {
-	sprite.setTexture(Figure::texture);
-	switch (color) {
-	case Figure::Color::Black:
-		sprite.setTextureRect(sf::IntRect(56 * 3, 0, 56, 56));
-		break;
-	case Figure::Color::White:
-		sprite.setTextureRect(sf::IntRect(56 * 3, 56, 56, 56));
-		break;
-	}
-}
+Queen::Queen(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Queen, color, pos, board) {}
 
 std::unique_ptr<Figure> Queen::clone() const {
 	return std::make_unique<Queen>(this->getColor(), getPosition(), board);
@@ -35,5 +25,15 @@ bool Queen::canAttack(sf::Vector2i newpos) const
 	return false;
 }
 void Queen::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
+
+	switch (getColor()) {
+	case Figure::Color::Black:
+		sprite.setTextureRect(sf::IntRect(56 * 3, 0, 56, 56));
+		break;
+	case Figure::Color::White:
+		sprite.setTextureRect(sf::IntRect(56 * 3, 56, 56, 56));
+		break;
+	}
 	target.draw(sprite, states);
 }
