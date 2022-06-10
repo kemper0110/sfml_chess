@@ -3,7 +3,12 @@
 
 #include "FigureMoves.h"
 
-Figure::Figure(Type type, Color color, sf::Vector2i pos, Board& board) : type(type), color(color), pos(pos), board(board){}
+Figure::Figure(Type type, Color color, sf::Vector2i pos, char mark, Board& board) : type(type), color(color), pos(pos), mark(mark), board(board){}
+Figure::~Figure(){}
+char Figure::getMark() const
+{
+	return mark;
+}
 Figure::Type Figure::getType() const {
 	return type;
 }

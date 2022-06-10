@@ -4,7 +4,7 @@
 #include "Board.h"
 
 
-King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::King, color, pos, board) {}
+King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::King, color, pos, 'K', board) {}
 
 std::unique_ptr<Figure> King::clone() const {
 	return std::make_unique<King>(this->getColor(), getPosition(), board);

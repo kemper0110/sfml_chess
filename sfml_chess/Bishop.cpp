@@ -3,7 +3,7 @@
 #include "FigureMoves.h"
 
 
-Bishop::Bishop(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Bishop, color, pos, board) {}
+Bishop::Bishop(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Bishop, color, pos, 'B', board) {}
 
 std::unique_ptr<Figure> Bishop::clone() const {
 	return std::make_unique<Bishop>(this->getColor(), getPosition(), board);

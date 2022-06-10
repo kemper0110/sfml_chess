@@ -2,6 +2,8 @@
 #include "Figures.h"
 #include <array>
 #include <list>
+#include <iostream>
+#include <fmt/format.h>
 
 #include "Figures_fwd.h"
 

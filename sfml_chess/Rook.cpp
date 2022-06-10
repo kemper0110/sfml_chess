@@ -3,7 +3,7 @@
 
 
 
-Rook::Rook(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Rook, color, pos, board) {}
+Rook::Rook(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Rook, color, pos, 'R', board) {}
 
 std::unique_ptr<Figure> Rook::clone() const {
 	return std::make_unique<Rook>(this->getColor(), getPosition(), board);

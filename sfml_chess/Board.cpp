@@ -33,8 +33,13 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 
 		auto& target = data[dst.y][dst.x];
 		target = std::move(figure);
-
-		// append to history this move;
+		
+		// append to history this movement (Pawn is not marked)
+		if (figure->getType() == Figure::Type::Pawn)
+			history.push_back(fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y));
+		else
+			history.push_back(fmt::format("{}{}{}-{}{}", figure->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
+		std::cout << history.back() << '\n';
 	}
 }
 

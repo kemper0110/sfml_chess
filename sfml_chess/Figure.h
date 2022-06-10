@@ -20,7 +20,9 @@ public:
 		Null, White, Black
 	};
 
-	Figure(Type type, Color color, sf::Vector2i pos, Board& board);
+	Figure(Type type, Color color, sf::Vector2i pos, char mark, Board& board);
+	virtual ~Figure();
+	char getMark() const;
 
 	virtual std::unique_ptr<Figure> clone() const = 0;
 	Type getType() const;
@@ -33,6 +35,7 @@ public:
 private:
 	Type type;
 	Color color;
+	char mark;
 protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	sf::Vector2i pos;
