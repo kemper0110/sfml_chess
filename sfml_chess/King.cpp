@@ -9,7 +9,7 @@ King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure:
 std::unique_ptr<Figure> King::clone() const {
 	return std::make_unique<King>(this->getColor(), getPosition(), board);
 }
-bool King::canMove(sf::Vector2i newpos) const {
+bool King::canMove(sf::Vector2i newpos) {
 	if (not Figure::canMove(newpos) or not canAttack(newpos))
 		return false;
 

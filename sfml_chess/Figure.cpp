@@ -23,7 +23,7 @@ void Figure::move(sf::Vector2i newpos) {
 	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
 }
 
-bool Figure::canMove(sf::Vector2i newpos) const {
+bool Figure::canMove(sf::Vector2i newpos) {
 	// переход на эту позицию не должен подставлять короля под шах
 	// if(FigureMoves::isKingShah(board, newpos))
 	// findKingOnBoard
@@ -35,7 +35,46 @@ bool Figure::canMove(sf::Vector2i newpos) const {
 	// target color is not same
 
 	const auto& figure = board.at(newpos);
-	return Figure::canAttack(newpos) and figure? figure->getType() != Figure::Type::King and figure->getColor() != this->getColor() : true;
+	if (not Figure::canAttack(newpos))
+		return false;
+
+	auto& cell = board.at({ this->getPosition() });
+
+
+	const auto king = FigureMoves::findKingOnBoard(board, color);
+
+	// moving figure
+	const auto prev_pos = cell->getPosition();
+	cell->move(newpos);
+	auto& target = board.at(newpos);
+	auto prev_cell = std::move(target);
+	target = std::move(cell);
+
+	Figure::Color opposite_color;
+	switch (color) {
+	case Figure::Color::Black: opposite_color = Figure::Color::White; break;
+	case Figure::Color::White: opposite_color = Figure::Color::Black; break;
+	default: throw;
+	}
+
+	const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
+
+	// returning figure to previous pos
+	cell = std::move(target);
+	target = std::move(prev_cell);
+	cell->move(prev_pos);
+
+
+	if (bad_move)
+		return false;
+
+	if (figure) {
+		if (figure->getType() == Figure::Type::King)
+			return false;
+		if (figure->getColor() == this->getColor())
+			return false;
+	}
+	return true;
 }
 
 bool Figure::canAttack(sf::Vector2i newpos) const

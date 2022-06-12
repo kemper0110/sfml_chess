@@ -26,6 +26,11 @@ const std::unique_ptr<Figure>& Board::at(sf::Vector2i pos) const{
 	return data[pos.y][pos.x];
 }
 
+std::unique_ptr<Figure>& Board::at(sf::Vector2i pos)
+{
+	return data[pos.y][pos.x];
+}
+
 void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 	auto& figure = data[src.y][src.x];
 	if (figure && figure->canMove(dst)) {
@@ -35,10 +40,10 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 		target = std::move(figure);
 		
 		// append to history this movement (Pawn is not marked)
-		if (figure->getType() == Figure::Type::Pawn)
+		if (target->getType() == Figure::Type::Pawn)
 			history.push_back(fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y));
 		else
-			history.push_back(fmt::format("{}{}{}-{}{}", figure->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
+			history.push_back(fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
 		std::cout << history.back() << '\n';
 	}
 }
@@ -49,6 +54,11 @@ const std::list<std::string>& Board::getHistory() const
 }
 
 const std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& Board::getData() const
+{
+	return data;
+}
+
+std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& Board::getData()
 {
 	return data;
 }

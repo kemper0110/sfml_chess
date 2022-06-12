@@ -21,9 +21,11 @@ class Board
 public:
 	Board();
 	const std::unique_ptr<Figure>& at(sf::Vector2i pos) const;
+	std::unique_ptr<Figure>& at(sf::Vector2i pos);
 	void move(sf::Vector2i src, sf::Vector2i dst);
 	const std::list<std::string>& getHistory() const;
 	const std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& getData() const;
+	std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& getData();
 protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	sf::Sprite sprite;

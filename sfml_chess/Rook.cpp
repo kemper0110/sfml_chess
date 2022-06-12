@@ -8,7 +8,7 @@ Rook::Rook(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure:
 std::unique_ptr<Figure> Rook::clone() const {
 	return std::make_unique<Rook>(this->getColor(), getPosition(), board);
 }
-bool Rook::canMove(sf::Vector2i newpos) const {
+bool Rook::canMove(sf::Vector2i newpos) {
 	return Figure::canMove(newpos) and this->canAttack(newpos);
 }
 bool Rook::canAttack(sf::Vector2i newpos) const

@@ -29,7 +29,7 @@ public:
 	Color getColor() const;
 	sf::Vector2i getPosition() const;
 	void move(sf::Vector2i newpos);
-	virtual bool canMove(sf::Vector2i newpos) const;
+	virtual bool canMove(sf::Vector2i newpos) ;
 	virtual bool canAttack(sf::Vector2i newpos) const;
 
 private:

@@ -4,6 +4,7 @@
 #include <sfml/Graphics.hpp>
 #include <iostream>
 #include <optional>
+#include <chrono>
 
 
 
@@ -13,10 +14,6 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(504, 504), "");
 	window.setFramerateLimit(10);
-
-
-	sf::Texture figures_tex;
-	figures_tex.loadFromFile("figures.png");
 
 
 	//const sf::Vector2f board_offset(28, 28);
@@ -73,6 +70,10 @@ int main()
 					const auto click = event.mouseButton;
 					switch (click.button) {
 					case sf::Mouse::Left:
+
+						const auto begin = std::chrono::high_resolution_clock::now();
+
+
 						const sf::Vector2f clickpos = sf::Vector2f(static_cast<float>(click.x), static_cast<float>(click.y)) - Figure::board_offset;
 						const auto clickidx = sf::Vector2i(clickpos / 56.f);
 
@@ -93,18 +94,23 @@ int main()
 									std::cout << "Pat for " << static_cast<int>(who_moves) << '\n';
 									window.close();
 								}
+								if (FigureMoves::isMat(board, who_moves)) {
+									std::cout << "Mat for " << static_cast<int>(who_moves) << '\n';
+									window.close();
+								}
 
 								// если нет ходов у фигур => ПАТ
 								// проверить наличие ШАХА королю => следующий шаг должен предотвратить ШАХ
 								// если таких шагов нет => МАТ
-
 							}
 						}
 						else {
 							if (clicked_figure and who_moves == clicked_figure->getColor())
 								selected = clickidx;
 						}
+						const auto end = std::chrono::high_resolution_clock::now();
 
+						std::cout << "time: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin) << '\n';
 
 						break;
 					}

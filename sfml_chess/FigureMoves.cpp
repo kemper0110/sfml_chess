@@ -45,23 +45,9 @@ bool FigureMoves::isHorizontalFree(const Board& board, const sf::Vector2i& src, 
 	return true;
 }
 
-bool FigureMoves::isKingShah(const Board& board, const sf::Vector2i& king)
-{
-	// if exist figure on board with opposite color that can move to king then king is on shah
-	const auto& king_figure = board.at(king);
-	for (const auto& row : board.getData())
-		for (const auto& figure : row)
-			if (figure->getColor() != king_figure->getColor() and figure->canMove(king))
-				return true;
-
-	return false;
-}
 
 bool FigureMoves::isUnderAttackOf(const Board& board, const sf::Vector2i& target, const Figure::Color color)
 {
-
-
-
 	for (const auto& row : board.getData())
 		for (const auto& figure : row)
 			if (figure and figure->getColor() == color and figure->canAttack(target))
@@ -87,4 +73,62 @@ bool FigureMoves::isPat(const Board& board, const Figure::Color color)
 				if (hasMoves(figure))
 					return false;
 	return true;
+}
+
+bool FigureMoves::isMat(Board& board, const Figure::Color color)
+{
+
+
+	auto& data = board.getData();
+	const auto king = FigureMoves::findKingOnBoard(board, color);
+
+
+	Figure::Color opposite_color;
+	switch (color) {
+	case Figure::Color::Black: opposite_color = Figure::Color::White; break;
+	case Figure::Color::White: opposite_color = Figure::Color::Black; break;
+	default: throw;
+	}
+
+	if (not FigureMoves::isUnderAttackOf(board, king, opposite_color))
+		return false;
+
+	for (auto& row : data) {
+		for (auto& cell : row) {
+			if (cell) {
+				for (int y = 0; y < data.size(); ++y)
+					for (int x = 0; x < data[y].size(); ++x)
+						if (cell->canMove({ x, y })) {
+							
+							// moving figure
+							const auto prev_pos = cell->getPosition();
+							cell->move({ x, y });
+							auto& target = data[y][x];
+							auto prev_cell = std::move(target);
+							target = std::move(cell);
+
+							const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
+
+							// returning figure to previous pos
+							cell = std::move(target);
+							target = std::move(prev_cell);
+							cell->move(prev_pos);
+
+							if (not bad_move)
+								return true;
+						}
+			}
+		}
+	}
+	return false;
+}
+
+sf::Vector2i FigureMoves::findKingOnBoard(const Board& board, const Figure::Color color)
+{
+	for (const auto& row : board.getData())
+		for (const auto& figure : row)
+			if (figure and figure->getType() == Figure::Type::King and figure->getColor() == color)
+				return figure->getPosition();
+
+	throw "wtf where is king?";
 }

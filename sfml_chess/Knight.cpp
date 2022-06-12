@@ -5,7 +5,7 @@ Knight::Knight(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Fig
 std::unique_ptr<Figure> Knight::clone() const {
 	return std::make_unique<Knight>(this->getColor(), getPosition(), board);
 }
-bool Knight::canMove(sf::Vector2i newpos) const {
+bool Knight::canMove(sf::Vector2i newpos) {
 	return Figure::canMove(newpos) and this->canAttack(newpos);
 }
 bool Knight::canAttack(sf::Vector2i newpos) const

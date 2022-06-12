@@ -9,14 +9,12 @@ public:
 	static bool isDiagonalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
 	static bool isVerticalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
 	static bool isHorizontalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
-	static bool isKingShah(const Board& board, const sf::Vector2i& king);
 
 	static bool isUnderAttackOf(const Board& board, const sf::Vector2i& target, const Figure::Color color);
 	static bool isPat(const Board& board, const Figure::Color color);
+	static bool isMat(Board& board, const Figure::Color color);
 
 
-	static sf::Vector2i findKingOnBoard(const Board& board);
-	static bool canKingBeSecured(Board& board, const sf::Vector2i& king);
-	static bool canFigureSecureKing(Board& board, const sf::Vector2i& security);
+	static sf::Vector2i findKingOnBoard(const Board& board, const Figure::Color color);
 };
 

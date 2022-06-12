@@ -7,7 +7,7 @@ Queen::Queen(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figur
 std::unique_ptr<Figure> Queen::clone() const {
 	return std::make_unique<Queen>(this->getColor(), getPosition(), board);
 }
-bool Queen::canMove(sf::Vector2i newpos) const {
+bool Queen::canMove(sf::Vector2i newpos) {
 	return Figure::canMove(newpos) and this->canAttack(newpos);
 }
 bool Queen::canAttack(sf::Vector2i newpos) const

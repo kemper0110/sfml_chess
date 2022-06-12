@@ -8,7 +8,7 @@ Bishop::Bishop(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Fig
 std::unique_ptr<Figure> Bishop::clone() const {
 	return std::make_unique<Bishop>(this->getColor(), getPosition(), board);
 }
-bool Bishop::canMove(sf::Vector2i newpos) const {
+bool Bishop::canMove(sf::Vector2i newpos) {
 	return Figure::canMove(newpos) and this->canAttack(newpos);
 
 }

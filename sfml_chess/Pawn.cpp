@@ -9,7 +9,7 @@ std::unique_ptr<Figure> Pawn::clone() const {
 }
 
 
-bool Pawn::canMove(sf::Vector2i newpos) const {
+bool Pawn::canMove(sf::Vector2i newpos) {
 	if (not Figure::canMove(newpos))
 		return false;
 
@@ -37,19 +37,19 @@ bool Pawn::canMove(sf::Vector2i newpos) const {
 	if (pos.y == (colorFlag == 0 ? 1 : 6) and newpos == pos + moves[colorFlag][1] and not board.at(newpos))
 		return true;
 
-	// en passant not done yet
-	if (getColor() == Figure::Color::White) {
-		const auto row2 = '1' or '6';	// BW	
-		const auto row4 = '3' or '4';	// BW
-		if (const auto& last_move = board.getHistory().back();
-			last_move.size() == 5 and last_move[1] == row2 and last_move[3] == row4)
-			if (last_move[0] == last_move[4] and last_move[0] == pos.x) {
-				//if()
-			}
-				
-	}
-	if (getColor() == Figure::Color::Black) {
-	}
+	//// en passant not done yet
+	//if (getColor() == Figure::Color::White) {
+	//	const auto row2 = '1' or '6';	// BW	
+	//	const auto row4 = '3' or '4';	// BW
+	//	if (const auto& last_move = board.getHistory().back();
+	//		last_move.size() == 5 and last_move[1] == row2 and last_move[3] == row4)
+	//		if (last_move[0] == last_move[4] and last_move[0] == pos.x) {
+	//			//if()
+	//		}
+	//			
+	//}
+	//if (getColor() == Figure::Color::Black) {
+	//}
 	return board.at(newpos) and canAttack(newpos);
 }
 
