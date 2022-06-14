@@ -6,6 +6,7 @@
 #include <fmt/format.h>
 
 #include "Figures_fwd.h"
+#include "Movement.h"
 
 
 class Board

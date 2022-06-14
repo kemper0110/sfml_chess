@@ -42,7 +42,7 @@ int main()
 
 			for (int i = 0; i < 8; ++i)
 				for (int j = 0; j < 8; ++j)
-					if (board.at(selected.value())->canMove({ i, j })) {
+					if (not std::holds_alternative<Movements::Illegal>(board.at(selected.value())->canMove({ i, j }))) {
 						cs.setPosition(Figure::board_offset + sf::Vector2f(static_cast<float>(i), static_cast<float>(j)) * 56.f);
 						window.draw(cs);
 					}
@@ -84,7 +84,7 @@ int main()
 
 							if (clicked_figure and clicked_figure->getColor() == selected_figure->getColor())
 								selected.emplace(clickidx);
-							else if (selected_figure->canMove(clickidx) and clickidx != selected.value()) {
+							else if (not std::holds_alternative<Movements::Illegal>(selected_figure->canMove(clickidx)) and clickidx != selected.value()) {
 								board.move(selected.value(), clickidx);
 								selected.reset();
 								who_moves = who_moves == Figure::Color::Black ? Figure::Color::White : Figure::Color::Black;

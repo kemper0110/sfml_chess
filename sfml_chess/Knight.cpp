@@ -1,4 +1,6 @@
 #include "Knight.h"
+#include "FigureMoves.h"
+#include "Board.h"
 
 Knight::Knight(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Knight, color, pos, 'N', board) {}
 
@@ -9,6 +11,8 @@ std::unique_ptr<Figure> Knight::clone() const {
 Movement Knight::canMove(sf::Vector2i newpos) {
 	if (std::holds_alternative<Movements::Common>(Figure::canMove(newpos)) and canAttack(newpos))
 		return Movements::Common{};
+	else
+		return Movements::Illegal{};
 }
 
 bool Knight::canAttack(sf::Vector2i newpos) const

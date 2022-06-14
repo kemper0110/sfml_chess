@@ -2,6 +2,7 @@
 #include "Figure.h"
 
 #include "Figures_fwd.h"
+#include "Movement.h"
 
 
 class Pawn :

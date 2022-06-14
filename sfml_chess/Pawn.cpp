@@ -1,4 +1,5 @@
 #include "Pawn.h"
+#include "FigureMoves.h"
 #include "Board.h"
 
 

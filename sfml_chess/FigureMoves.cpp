@@ -73,7 +73,7 @@ bool FigureMoves::isPat(const Board& board, const Figure::Color color)
 		const auto& data = board.getData();
 		for (int y = 0; y < data.size(); ++y)
 			for (int x = 0; x < data[y].size(); ++x)
-				if (figure->canMove({ y, x }))
+				if (not std::holds_alternative<Movements::Illegal>(figure->canMove({ y, x })))
 					return true;
 		return false;
 	};
@@ -112,7 +112,7 @@ bool FigureMoves::isMat(Board& board, const Figure::Color color)
 			for (int y = 0; y < data.size(); ++y)
 				for (int x = 0; x < data[y].size(); ++x)
 					// check cells where figure can move
-					if (figure->canMove({ x, y })) {
+					if (std::holds_alternative<Movements::Common>(figure->canMove({ x, y }))) {
 
 						// moving figure
 						const auto prev_pos = figure->getPosition();

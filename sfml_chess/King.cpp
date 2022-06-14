@@ -1,6 +1,5 @@
 #include "King.h"
 #include "FigureMoves.h"
-
 #include "Board.h"
 
 

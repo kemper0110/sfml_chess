@@ -3,7 +3,8 @@
 #include <memory>
 
 #include "Figures_fwd.h"
-#include "FigureMoves.h"
+//#include "FigureMoves.h"
+#include "Movement.h"
 
 
 class Figure
@@ -30,7 +31,7 @@ public:
 	Color getColor() const;
 	sf::Vector2i getPosition() const;
 	void move(sf::Vector2i newpos);
-	virtual Movement canMove(sf::Vector2i newpos) ;
+	virtual Movement canMove(sf::Vector2i newpos);
 	virtual bool canAttack(sf::Vector2i newpos) const;
 
 private:
@@ -54,4 +55,3 @@ public:
 	const static inline sf::Vector2f board_offset = sf::Vector2f(28, 28);
 };
 
-constexpr auto size = sizeof(Figure);

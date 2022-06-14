@@ -1,5 +1,10 @@
 #include "Board.h"
-#include "FigureMoves.h"
+
+
+template<typename... Lambdas>
+struct Overload : Lambdas... {
+	using Lambdas::operator()...;
+};
 
 Board::Board() {
 	sprite.setTexture(texture);
@@ -37,42 +42,39 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 	if (not figure)
 		return;
 	const auto move_strategy = figure->canMove(dst);
-	constexpr auto isValid = Overload{
-		[](Movements::Common) { return true; },
-		[](Movements::Castling) { return true; },
-		[](Movements::EnPassan) { return true; },
-		[](Movements::Illegal) { return false; }
-	};
 	constexpr auto move = Overload{
-		[](Movements::Common) { return true; },
-		[](Movements::Castling) { return true; },
-		[](Movements::EnPassan) { return true; },
-		[](Movements::Illegal) { throw; }
+		[](Movements::Common) { },
+		[](Movements::Castling) { },
+		[](Movements::EnPassan) { },
+		[](Movements::Illegal) { return; }
 	};
-	if (move_strategy) {
-		figure->move(dst);
 
-		auto& target = data[dst.y][dst.x];
-		target = std::move(figure);
+	std::visit(move, move_strategy);
 
-		// append to history this movement (Pawn is not marked)
-		switch (target->getColor()) {
-		case Figure::Color::White:
-			if (target->getType() == Figure::Type::Pawn)
-				history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
-			else
-				history.push_back(fmt::format("{}{}{}-{}{}|", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
-			break;
-		case Figure::Color::Black:
-			if (target->getType() == Figure::Type::Pawn)
-				history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
-			else
-				history.back() += fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y);
-			std::cout << history.back() << '\n';
-			break;
-		}
+	//if (not std::holds_alternative<Movements::Illegal>(move_strategy)) {
+	//	figure->move(dst);
 
-	}
+	//	auto& target = data[dst.y][dst.x];
+	//	target = std::move(figure);
+
+	//	// append to history this movement (Pawn is not marked)
+	//	switch (target->getColor()) {
+	//	case Figure::Color::White:
+	//		if (target->getType() == Figure::Type::Pawn)
+	//			history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+	//		else
+	//			history.push_back(fmt::format("{}{}{}-{}{}|", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
+	//		break;
+	//	case Figure::Color::Black:
+	//		if (target->getType() == Figure::Type::Pawn)
+	//			history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+	//		else
+	//			history.back() += fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y);
+	//		std::cout << history.back() << '\n';
+	//		break;
+	//	}
+
+	//}
 }
 
 const std::list<std::string>& Board::getHistory() const

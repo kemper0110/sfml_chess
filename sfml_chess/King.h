@@ -4,6 +4,7 @@
 #include "Figures_fwd.h"
 
 
+
 class King :
     public Figure
 {
