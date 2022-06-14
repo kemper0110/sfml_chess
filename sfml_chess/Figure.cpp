@@ -23,7 +23,7 @@ void Figure::move(sf::Vector2i newpos) {
 	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
 }
 
-bool Figure::canMove(sf::Vector2i newpos) {
+Movement Figure::canMove(sf::Vector2i newpos) {
 	// переход на эту позицию не должен подставлять короля под шах
 	// if(FigureMoves::isKingShah(board, newpos))
 	// findKingOnBoard
@@ -36,7 +36,7 @@ bool Figure::canMove(sf::Vector2i newpos) {
 
 	const auto& figure = board.at(newpos);
 	if (not Figure::canAttack(newpos))
-		return false;
+		return Movements::Illegal{};
 
 	auto& cell = board.at({ this->getPosition() });
 
@@ -66,15 +66,15 @@ bool Figure::canMove(sf::Vector2i newpos) {
 
 
 	if (bad_move)
-		return false;
+		return Movements::Illegal{};
 
 	if (figure) {
 		if (figure->getType() == Figure::Type::King)
-			return false;
+			return Movements::Illegal{};
 		if (figure->getColor() == this->getColor())
-			return false;
+			return Movements::Illegal{};
 	}
-	return true;
+	return Movements::Common{};
 }
 
 bool Figure::canAttack(sf::Vector2i newpos) const

@@ -9,7 +9,6 @@
 
 
 
-
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(504, 504), "");

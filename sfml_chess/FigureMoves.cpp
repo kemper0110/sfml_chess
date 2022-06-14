@@ -58,6 +58,17 @@ bool FigureMoves::isUnderAttackOf(const Board& board, const sf::Vector2i& target
 
 bool FigureMoves::isPat(const Board& board, const Figure::Color color)
 {
+	const auto king = FigureMoves::findKingOnBoard(board, color);
+
+	Figure::Color opposite_color;
+	switch (color) {
+	case Figure::Color::White: opposite_color = Figure::Color::Black; break;
+	case Figure::Color::Black: opposite_color = Figure::Color::White; break;
+	default: throw;
+	}
+	if (FigureMoves::isUnderAttackOf(board, king, opposite_color))
+		return false;
+
 	const auto hasMoves = [&board](const auto& figure) {
 		const auto& data = board.getData();
 		for (int y = 0; y < data.size(); ++y)
@@ -94,33 +105,35 @@ bool FigureMoves::isMat(Board& board, const Figure::Color color)
 		return false;
 
 	for (auto& row : data) {
-		for (auto& cell : row) {
-			if (cell) {
-				for (int y = 0; y < data.size(); ++y)
-					for (int x = 0; x < data[y].size(); ++x)
-						if (cell->canMove({ x, y })) {
-							
-							// moving figure
-							const auto prev_pos = cell->getPosition();
-							cell->move({ x, y });
-							auto& target = data[y][x];
-							auto prev_cell = std::move(target);
-							target = std::move(cell);
+		for (auto& figure : row) {
+			// skip cells without figures or figures with oppposite color
+			if (not figure or figure->getColor() == opposite_color)
+				continue;
+			for (int y = 0; y < data.size(); ++y)
+				for (int x = 0; x < data[y].size(); ++x)
+					// check cells where figure can move
+					if (figure->canMove({ x, y })) {
 
-							const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
+						// moving figure
+						const auto prev_pos = figure->getPosition();
+						figure->move({ x, y });
+						auto& target = data[y][x];
+						auto prev_cell = std::move(target);
+						target = std::move(figure);
 
-							// returning figure to previous pos
-							cell = std::move(target);
-							target = std::move(prev_cell);
-							cell->move(prev_pos);
+						const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
 
-							if (not bad_move)
-								return true;
-						}
-			}
+						// returning figure to previous pos
+						figure = std::move(target);
+						target = std::move(prev_cell);
+						figure->move(prev_pos);
+
+						if (not bad_move)
+							return false;
+					}
 		}
 	}
-	return false;
+	return true;
 }
 
 sf::Vector2i FigureMoves::findKingOnBoard(const Board& board, const Figure::Color color)

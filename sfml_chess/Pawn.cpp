@@ -9,9 +9,9 @@ std::unique_ptr<Figure> Pawn::clone() const {
 }
 
 
-bool Pawn::canMove(sf::Vector2i newpos) {
-	if (not Figure::canMove(newpos))
-		return false;
+Movement Pawn::canMove(sf::Vector2i newpos) {
+	if (not std::holds_alternative<Movements::Common>(Figure::canMove(newpos)))
+		return Movements::Illegal{};
 
 	bool colorFlag;
 	switch (getColor()) {
@@ -31,11 +31,11 @@ bool Pawn::canMove(sf::Vector2i newpos) {
 	};
 	// forward is clear
 	if (newpos == pos + moves[colorFlag][0] and not board.at(newpos))
-		return true;
+		return Movements::Common{};
 
 	// first double step with clear forward
 	if (pos.y == (colorFlag == 0 ? 1 : 6) and newpos == pos + moves[colorFlag][1] and not board.at(newpos))
-		return true;
+		return Movements::Common{};
 
 	//// en passant not done yet
 	//if (getColor() == Figure::Color::White) {
@@ -50,7 +50,9 @@ bool Pawn::canMove(sf::Vector2i newpos) {
 	//}
 	//if (getColor() == Figure::Color::Black) {
 	//}
-	return board.at(newpos) and canAttack(newpos);
+
+	if (board.at(newpos) and canAttack(newpos))
+		return Movements::Common{};
 }
 
 bool Pawn::canAttack(sf::Vector2i newpos) const

@@ -10,7 +10,7 @@ class Queen :
 public:
     Queen(Figure::Color color, sf::Vector2i pos, Board& board);
     std::unique_ptr<Figure> clone() const override;
-    bool canMove(sf::Vector2i newpos) override;
+    Movement canMove(sf::Vector2i newpos) override;
     bool canAttack(sf::Vector2i newpos) const override;
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

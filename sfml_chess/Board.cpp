@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "FigureMoves.h"
 
 Board::Board() {
 	sprite.setTexture(texture);
@@ -22,7 +23,7 @@ Board::Board() {
 }
 
 
-const std::unique_ptr<Figure>& Board::at(sf::Vector2i pos) const{
+const std::unique_ptr<Figure>& Board::at(sf::Vector2i pos) const {
 	return data[pos.y][pos.x];
 }
 
@@ -33,18 +34,44 @@ std::unique_ptr<Figure>& Board::at(sf::Vector2i pos)
 
 void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 	auto& figure = data[src.y][src.x];
-	if (figure && figure->canMove(dst)) {
+	if (not figure)
+		return;
+	const auto move_strategy = figure->canMove(dst);
+	constexpr auto isValid = Overload{
+		[](Movements::Common) { return true; },
+		[](Movements::Castling) { return true; },
+		[](Movements::EnPassan) { return true; },
+		[](Movements::Illegal) { return false; }
+	};
+	constexpr auto move = Overload{
+		[](Movements::Common) { return true; },
+		[](Movements::Castling) { return true; },
+		[](Movements::EnPassan) { return true; },
+		[](Movements::Illegal) { throw; }
+	};
+	if (move_strategy) {
 		figure->move(dst);
 
 		auto& target = data[dst.y][dst.x];
 		target = std::move(figure);
-		
+
 		// append to history this movement (Pawn is not marked)
-		if (target->getType() == Figure::Type::Pawn)
-			history.push_back(fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y));
-		else
-			history.push_back(fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
-		std::cout << history.back() << '\n';
+		switch (target->getColor()) {
+		case Figure::Color::White:
+			if (target->getType() == Figure::Type::Pawn)
+				history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+			else
+				history.push_back(fmt::format("{}{}{}-{}{}|", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
+			break;
+		case Figure::Color::Black:
+			if (target->getType() == Figure::Type::Pawn)
+				history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+			else
+				history.back() += fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y);
+			std::cout << history.back() << '\n';
+			break;
+		}
+
 	}
 }
 

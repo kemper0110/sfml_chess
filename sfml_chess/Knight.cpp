@@ -5,9 +5,12 @@ Knight::Knight(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Fig
 std::unique_ptr<Figure> Knight::clone() const {
 	return std::make_unique<Knight>(this->getColor(), getPosition(), board);
 }
-bool Knight::canMove(sf::Vector2i newpos) {
-	return Figure::canMove(newpos) and this->canAttack(newpos);
+
+Movement Knight::canMove(sf::Vector2i newpos) {
+	if (std::holds_alternative<Movements::Common>(Figure::canMove(newpos)) and canAttack(newpos))
+		return Movements::Common{};
 }
+
 bool Knight::canAttack(sf::Vector2i newpos) const
 {
 	if (not Figure::canAttack(newpos))
