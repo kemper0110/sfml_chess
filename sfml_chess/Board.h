@@ -13,14 +13,21 @@ class Board
 	:
 	public sf::Drawable
 {
+
+
 	std::array<std::array<std::unique_ptr<Figure>, 8>, 8> data;
 	// not a vector because there are
 	// no random access
 	// only appending to end
 	// heavy strings
 	std::list<std::string> history;
-public:
 	Board();
+public:
+	Figure::Color who_moves = Figure::Color::White;
+	Figure::Color playing_as;
+
+
+	Board(Figure::Color playing_as);
 	const std::unique_ptr<Figure>& at(sf::Vector2i pos) const;
 	std::unique_ptr<Figure>& at(sf::Vector2i pos);
 	void move(sf::Vector2i src, sf::Vector2i dst);

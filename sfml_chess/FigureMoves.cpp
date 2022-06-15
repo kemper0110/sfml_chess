@@ -91,7 +91,7 @@ bool FigureMoves::isMat(Board& board, const Figure::Color color)
 
 
 	auto& data = board.getData();
-	const auto king = FigureMoves::findKingOnBoard(board, color);
+	auto king = FigureMoves::findKingOnBoard(board, color);
 
 
 	Figure::Color opposite_color;
@@ -114,6 +114,10 @@ bool FigureMoves::isMat(Board& board, const Figure::Color color)
 					// check cells where figure can move
 					if (std::holds_alternative<Movements::Common>(figure->canMove({ x, y }))) {
 
+						// invalidate if moving figure is king
+						bool invalidate_king_pos = false;
+						if (figure->getType() == Figure::Type::King)
+							invalidate_king_pos = true;
 						// moving figure
 						const auto prev_pos = figure->getPosition();
 						figure->move({ x, y });
@@ -121,7 +125,11 @@ bool FigureMoves::isMat(Board& board, const Figure::Color color)
 						auto prev_cell = std::move(target);
 						target = std::move(figure);
 
+						if (invalidate_king_pos)
+							king = FigureMoves::findKingOnBoard(board, color);
+
 						const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
+
 
 						// returning figure to previous pos
 						figure = std::move(target);

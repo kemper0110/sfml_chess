@@ -28,6 +28,11 @@ Board::Board() {
 }
 
 
+Board::Board(Figure::Color playing_as) : Board()
+{
+	this->playing_as = playing_as;
+}
+
 const std::unique_ptr<Figure>& Board::at(sf::Vector2i pos) const {
 	return data[pos.y][pos.x];
 }
@@ -41,40 +46,36 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 	auto& figure = data[src.y][src.x];
 	if (not figure)
 		return;
+
 	const auto move_strategy = figure->canMove(dst);
-	constexpr auto move = Overload{
-		[](Movements::Common) { },
-		[](Movements::Castling) { },
-		[](Movements::EnPassan) { },
-		[](Movements::Illegal) { return; }
+	const auto move = Overload{
+		[&figure, &src, &dst, this](Movements::Common) {
+			figure->move(dst);
+			auto& target = data[dst.y][dst.x];
+			target = std::move(figure);
+			// append to history this movement (Pawn is not marked)
+			switch (target->getColor()) {
+			case Figure::Color::White:
+				if (target->getType() == Figure::Type::Pawn)
+					history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+				else
+					history.push_back(fmt::format("{}{}{}-{}{}|", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
+				break;
+			case Figure::Color::Black:
+				if (target->getType() == Figure::Type::Pawn)
+					history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+				else
+					history.back() += fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y);
+				std::cout << history.back() << '\n';
+				break;
+			}
+		},
+		[&figure](Movements::Castling) { throw; },
+		[&figure](Movements::EnPassan) { throw; },
+		[&figure](Movements::Illegal) { throw; }
 	};
 
 	std::visit(move, move_strategy);
-
-	//if (not std::holds_alternative<Movements::Illegal>(move_strategy)) {
-	//	figure->move(dst);
-
-	//	auto& target = data[dst.y][dst.x];
-	//	target = std::move(figure);
-
-	//	// append to history this movement (Pawn is not marked)
-	//	switch (target->getColor()) {
-	//	case Figure::Color::White:
-	//		if (target->getType() == Figure::Type::Pawn)
-	//			history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
-	//		else
-	//			history.push_back(fmt::format("{}{}{}-{}{}|", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y));
-	//		break;
-	//	case Figure::Color::Black:
-	//		if (target->getType() == Figure::Type::Pawn)
-	//			history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
-	//		else
-	//			history.back() += fmt::format("{}{}{}-{}{}", target->getMark(), src.x, 7 - src.y, dst.x, 7 - dst.y);
-	//		std::cout << history.back() << '\n';
-	//		break;
-	//	}
-
-	//}
 }
 
 const std::list<std::string>& Board::getHistory() const
@@ -94,14 +95,53 @@ std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& Board::getData()
 
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite, states);
+	//sf::RenderTexture rtex;
+	//rtex.create()
 	for (const auto& row : data) {
 		for (const auto& cell : row) {
-			if (cell)
-				target.draw(*cell, states);
+			if (cell) {
+				const auto& figure = *cell;
+				const auto pos = figure.getPosition();
+
+				int y_offset;
+				switch (figure.getColor()) {
+				case Figure::Color::Black: y_offset = 0; break;
+				case Figure::Color::White: y_offset = 56; break;
+				default: throw "null color";
+				}
+				int idx;
+				switch (figure.getType()) {
+				case Figure::Type::Pawn: idx = 5; break;
+				case Figure::Type::Bishop: idx = 2; break;
+				case Figure::Type::Knight: idx = 1; break;
+				case Figure::Type::Rook: idx = 0; break;
+				case Figure::Type::Queen: idx = 3; break;
+				case Figure::Type::King: idx = 4; break;
+				default: throw "who are you?";
+				}
+				figure.sprite.setTextureRect(sf::IntRect(56 * idx, y_offset, 56, 56));
+
+				switch (playing_as) {
+				case Figure::Color::White:
+					figure.sprite.setPosition(sf::Vector2f{ pos * 56 });
+					break;
+				case Figure::Color::Black:
+					figure.sprite.setPosition(sf::Vector2f( (sf::Vector2i{7, 7} - pos ) * 56 ));
+					break;
+				default:
+					throw "kwo are you?";
+				}
+
+				//sprite.setPosition(sf::Vector2f(56 * pos));
+				
+				target.draw(figure.sprite, states);
+				//target.draw(*cell, states);
+
+			}
 		}
 	}
 }
 bool Board::load_texture() {
-	constexpr auto filename = "board.png";
+	constexpr auto filename = "board0.png";
 	return texture.loadFromFile(filename);
 }

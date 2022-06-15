@@ -20,10 +20,13 @@ sf::Vector2i Figure::getPosition() const {
 }
 void Figure::move(sf::Vector2i newpos) {
 	pos = newpos;
-	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
+	sprite.setPosition(sf::Vector2f(56 * pos));
 }
 
 Movement Figure::canMove(sf::Vector2i newpos) {
+	if (pos == newpos)
+		return Movements::Illegal{};
+
 	// переход на эту позицию не должен подставлять короля под шах
 	// if(FigureMoves::isKingShah(board, newpos))
 	// findKingOnBoard
@@ -40,8 +43,8 @@ Movement Figure::canMove(sf::Vector2i newpos) {
 
 	auto& cell = board.at({ this->getPosition() });
 
-
-	const auto king = FigureMoves::findKingOnBoard(board, color);
+	// if on next step king stands under attack then it's illegal step
+	auto king = FigureMoves::findKingOnBoard(board, color);
 
 	// moving figure
 	const auto prev_pos = cell->getPosition();
@@ -56,6 +59,9 @@ Movement Figure::canMove(sf::Vector2i newpos) {
 	case Figure::Color::White: opposite_color = Figure::Color::Black; break;
 	default: throw;
 	}
+
+	if(this->type == Figure::Type::King)
+		king = FigureMoves::findKingOnBoard(board, color);
 
 	const auto bad_move = FigureMoves::isUnderAttackOf(board, king, opposite_color);
 
@@ -83,10 +89,10 @@ bool Figure::canAttack(sf::Vector2i newpos) const
 		return false;
 	return true;
 }
-
-void Figure::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	//target.draw(sprite, states);
-}
+//
+//void Figure::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+//	//target.draw(sprite, states);
+//}
 
 bool Figure::loadTexture() {
 	constexpr auto filename = "figures.png";

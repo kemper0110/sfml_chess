@@ -11,7 +11,5 @@ public:
     std::unique_ptr<Figure> clone() const override;
     Movement canMove(sf::Vector2i newpos) override;
     bool canAttack(sf::Vector2i newpos) const override;
-protected:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

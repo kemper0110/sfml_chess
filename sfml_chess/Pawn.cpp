@@ -11,7 +11,7 @@ std::unique_ptr<Figure> Pawn::clone() const {
 
 
 Movement Pawn::canMove(sf::Vector2i newpos) {
-	if (not std::holds_alternative<Movements::Common>(Figure::canMove(newpos)))
+	if (std::holds_alternative<Movements::Illegal>(Figure::canMove(newpos)))
 		return Movements::Illegal{};
 
 	bool colorFlag;
@@ -27,8 +27,8 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 	// if(board.getHistory().back() == "" and )
 	const auto moves = std::array{
 		//		          one step                double step			  en passant1		en passant2 
-		std::array{  sf::Vector2i{  0, 1  }, sf::Vector2i{  0, 2  },  sf::Vector2i{  },  sf::Vector2i{ }  },
-		std::array{  sf::Vector2i{  0, -1 }, sf::Vector2i{  0, -2 },  sf::Vector2i{  },  sf::Vector2i{ }  }
+		std::array{  sf::Vector2i{  0, 1  }, sf::Vector2i{  0, 2  },  sf::Vector2i{  },  sf::Vector2i{ }  },	// black
+		std::array{  sf::Vector2i{  0, -1 }, sf::Vector2i{  0, -2 },  sf::Vector2i{  },  sf::Vector2i{ }  }		// white
 	};
 	// forward is clear
 	if (newpos == pos + moves[colorFlag][0] and not board.at(newpos))
@@ -54,6 +54,7 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 
 	if (board.at(newpos) and canAttack(newpos))
 		return Movements::Common{};
+	return Movements::Illegal{};
 }
 
 bool Pawn::canAttack(sf::Vector2i newpos) const
@@ -82,17 +83,17 @@ bool Pawn::canAttack(sf::Vector2i newpos) const
 	return false;
 }
 
-void Pawn::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	sprite.setPosition(board_offset + sf::Vector2f(56 * pos));
-
-	switch (getColor()) {
-	case Figure::Color::Black:
-		sprite.setTextureRect(sf::IntRect(56 * 5, 0, 56, 56));
-		break;
-	case Figure::Color::White:
-		sprite.setTextureRect(sf::IntRect(56 * 5, 56, 56, 56));
-		break;
-	}
-	target.draw(sprite, states);
-}
+//void Pawn::draw(sf::RenderTarget& target, sf::RenderStates states) const
+//{
+//	sprite.setPosition(sf::Vector2f(56 * pos));
+//
+//	switch (getColor()) {
+//	case Figure::Color::Black:
+//		sprite.setTextureRect(sf::IntRect(56 * 5, 0, 56, 56));
+//		break;
+//	case Figure::Color::White:
+//		sprite.setTextureRect(sf::IntRect(56 * 5, 56, 56, 56));
+//		break;
+//	}
+//	target.draw(sprite, states);
+//}

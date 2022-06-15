@@ -8,8 +8,6 @@
 
 
 class Figure
-	:
-	public sf::Drawable
 {
 public:
 	enum class Type : short
@@ -39,7 +37,6 @@ private:
 	Color color;
 	char mark;
 protected:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	sf::Vector2i pos;
 	//sf::Sprite sprite;
 	Board& board;
@@ -52,6 +49,5 @@ public:
 	const static inline bool isTextureLoaded = loadTexture();
 	static inline sf::Sprite sprite = sf::Sprite();
 	const static inline bool isSpriteLoaded = loadSprite();
-	const static inline sf::Vector2f board_offset = sf::Vector2f(28, 28);
 };
 
