@@ -14,43 +14,82 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 	if (std::holds_alternative<Movements::Illegal>(Figure::canMove(newpos)))
 		return Movements::Illegal{};
 
-	bool colorFlag;
+
+	//						let's assume that						BLACK = 0		WHITE = 1
+	bool color_flag;
 	switch (getColor()) {
-	case Figure::Color::Black: colorFlag = 0; break;
-	case Figure::Color::White: colorFlag = 1; break;
+	case Figure::Color::Black: color_flag = 0; break;
+	case Figure::Color::White: color_flag = 1; break;
 	default: throw;
 	}
-	// сделать взятие на проходе
-	// пешка на 5(4) горизонтали 
-	// другая пешка должна сделать шаг на 2 клетки, пересекая бой текущей пешки
-	// взятие можно совершать только следующим ходом
-	// if(board.getHistory().back() == "" and )
+
+
 	const auto moves = std::array{
-		//		          one step                double step			  en passant1		en passant2 
-		std::array{  sf::Vector2i{  0, 1  }, sf::Vector2i{  0, 2  },  sf::Vector2i{  },  sf::Vector2i{ }  },	// black
-		std::array{  sf::Vector2i{  0, -1 }, sf::Vector2i{  0, -2 },  sf::Vector2i{  },  sf::Vector2i{ }  }		// white
+		//		          one step                double step		
+		std::array{  sf::Vector2i{  0, 1  }, sf::Vector2i{  0, 2  } },	// black
+		std::array{  sf::Vector2i{  0, -1 }, sf::Vector2i{  0, -2 } },	// white
 	};
 	// forward is clear
-	if (newpos == pos + moves[colorFlag][0] and not board.at(newpos))
+	if (newpos == pos + moves[color_flag][0] and not board.at(newpos))
 		return Movements::Common{};
 
-	// first double step with clear forward
-	if (pos.y == (colorFlag == 0 ? 1 : 6) and newpos == pos + moves[colorFlag][1] and not board.at(newpos))
+	// first double step with empty forward
+	if (pos.y == (color_flag == 0 ? 1 : 6) and newpos == pos + moves[color_flag][1] and
+		not board.at(newpos) and not board.at(pos + moves[color_flag][0]))	// two cells are empty
 		return Movements::Common{};
 
-	//// en passant not done yet
-	//if (getColor() == Figure::Color::White) {
-	//	const auto row2 = '1' or '6';	// BW	
-	//	const auto row4 = '3' or '4';	// BW
-	//	if (const auto& last_move = board.getHistory().back();
-	//		last_move.size() == 5 and last_move[1] == row2 and last_move[3] == row4)
-	//		if (last_move[0] == last_move[4] and last_move[0] == pos.x) {
-	//			//if()
-	//		}
-	//			
-	//}
-	//if (getColor() == Figure::Color::Black) {
-	//}
+
+	const auto can_en_passant = std::invoke([this, color_flag, newpos] {
+		//								don't forget							BLACK = 0		WHITE = 1
+
+		// start positions of pawns for black/white
+		constexpr auto pos_y = std::array{ 4, 3 };
+		if (pos.y != pos_y[color_flag])
+			return false;
+
+		// corrections for black/white directions
+		constexpr auto dir = std::array{ 1, -1 };
+		
+		if (
+			newpos != pos + sf::Vector2i(1, 1) * dir[color_flag] and	// left diagonal
+			newpos != pos + sf::Vector2i(-1, 1) * dir[color_flag]		// right diagonal
+			)
+			return false;
+
+		// checking history
+		if (board.getHistory().empty())
+			return false;
+		const auto& last_move = board.getHistory().back();
+		constexpr auto move_size = std::array{ 6, 11 };
+		if (last_move.size() != move_size[color_flag])
+			return false;
+
+		const auto color_move = color_flag ?
+			std::string_view(last_move.begin() + last_move.find('|') + 1, last_move.end()) :		// take part of black move
+			std::string_view(last_move.begin(), last_move.begin() + last_move.find('|'));			// take part white move
+
+
+
+		constexpr auto coords = std::array{
+			std::array{ '1', '3' },		// black
+			std::array{ '6', '4' }		// white
+		};
+		const auto dx = newpos.x - pos.x;
+		
+		//	double-cell step forward 
+		if (
+			color_move[0] == color_move[3] and				// x-coord is not changed
+			color_move[1] == coords[color_flag][0] and		// y-coord is base position
+			color_move[3] == pos.x + dx + '0' and			// x-coord is left/right to (*this) Pawn 
+			color_move[4] == coords[color_flag][1]			// y-coord changed to (base + 2)
+			)
+			return true;
+		return false;
+		}
+	);
+
+	if (can_en_passant)
+		return Movements::EnPassant{};
 
 	if (board.at(newpos) and canAttack(newpos))
 		return Movements::Common{};

@@ -71,7 +71,7 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 			}
 		},
 		[&figure](Movements::Castling) { throw; },
-		[&figure](Movements::EnPassan) { throw; },
+		[&figure](Movements::EnPassant) { throw; },
 		[&figure](Movements::Illegal) { throw; }
 	};
 

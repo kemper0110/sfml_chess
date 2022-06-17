@@ -17,7 +17,7 @@ int main()
 
 	//const sf::Vector2f board_offset(28, 28);
 
-	Board board(Figure::Color::Black);
+	Board board(Figure::Color::White);
 
 	std::optional<sf::Vector2i> selected;
 
