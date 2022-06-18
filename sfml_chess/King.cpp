@@ -9,56 +9,101 @@ std::unique_ptr<Figure> King::clone() const {
 	return std::make_unique<King>(this->getColor(), getPosition(), board);
 }
 Movement King::canMove(sf::Vector2i newpos) {
-	bool color;
+	bool color_flag;
 	Figure::Color opposite_color;
 	switch (getColor()) {
-	case Figure::Color::White: color = 0; opposite_color = Figure::Color::Black; break;
-	case Figure::Color::Black: color = 1; opposite_color = Figure::Color::White; break;
+	case Figure::Color::White: color_flag = 0; opposite_color = Figure::Color::Black; break;
+	case Figure::Color::Black: color_flag = 1; opposite_color = Figure::Color::White; break;
 	default: throw;
 	}
 
-	//const auto can_castle = std::invoke([this, newpos, color, opposite_color] {
-	//	// 4 + 1, 4 + 2 must be not under attack
-	//	const sf::Vector2i openning_king[2]{ {4, 7}, {4, 0} };
-	//	const sf::Vector2i openning_rook[2][2]{
-	//		{ {0, 7}, {0, 0} },	// long castling 
-	//		{ {7, 7}, {7, 0} }	// short castling
-	//	};
+	const auto can_castle = std::invoke([this, newpos, color_flag, opposite_color] {
+		//																								WHITE = 0		BLACK = 1
+		if (FigureMoves::isUnderAttackOf(board, FigureMoves::findKingOnBoard(board, getColor()), opposite_color))
+			return false;
 
-	//	// check king and rook are on places
-	//	if (getPosition() != openning_king[color]
-	//		or
-	//		newpos != openning_rook[0][color] and newpos != openning_rook[1][color])
-	//		return false;
-	//	if (not FigureMoves::isUnderAttackOf(board, getPosition(), opposite_color))
-	//		return false;
+		if (color_flag) {	// black
+			if (pos != sf::Vector2i(4, 0))
+				return false;
 
-	//	// check history of king and rook moves
-	//	const auto& history = board.getHistory();
-	//	for (const auto& step : history) {
-	//		const auto pos = color ?
-	//			step.find('|') + 1 :		// take ending for black steps
-	//			0;							// take openning for white steps
-	//		if (step[pos] == 'K' or step[pos] == 'R')
-	//			return false;
-	//	}
+			if (newpos != sf::Vector2i(7, 0) and newpos != sf::Vector2i(0, 0))
+				return false;
 
-	//	// long castling rook position
-	//	if (newpos == openning_rook[0][color]) {
-	//		const sf::Vector2i long_castling_king[2]{ {2, 7}, {2, 0} };	// x + 1
-	//		// check if path is under attack
+			if (newpos == sf::Vector2i(7, 0)) {	// short castling
+				if (board.at({ 5, 0 }) or board.at({ 6, 0 }))
+					return false;
+				if (FigureMoves::isUnderAttackOf(board, sf::Vector2i(5, 0), opposite_color) or
+					FigureMoves::isUnderAttackOf(board, sf::Vector2i(6, 0), opposite_color))
+					return false;
+				// checking history
+				if (not board.getHistory().empty())
+					for (const auto& step : board.getHistory()) 
+						if (
+						const auto part = std::string_view(step | std::views::drop_while([](char x) { return x != '|'; }) | std::views::drop(1) | std::views::take(3));
+						part == "K47" or part == "R77")
+							return false;
+				return true;
+			}
+			else {	// long castling
+				if (board.at({ 1, 0 }) or board.at({ 2, 0 }) or board.at({ 3, 0 }))
+					return false;
+				if (FigureMoves::isUnderAttackOf(board, sf::Vector2i(2, 0), opposite_color) or
+					FigureMoves::isUnderAttackOf(board, sf::Vector2i(3, 0), opposite_color))
+					return false;
+				// checking history
+				if (not board.getHistory().empty())
+					for (const auto& step : board.getHistory()) 
+						if (
+						const auto part = std::string_view(step | std::views::drop_while([](char x) { return x != '|'; }) | std::views::drop(1) | std::views::take(3));
+							part == "K47" or part == "R07")
+							return false;
+				return true;
+			}
+		}
+		else {		// white
 
-	//	}
+			if (pos != sf::Vector2i(4, 7))
+				return false;
 
-	//	// short castling rook position
-	//	else if (newpos == openning_rook[1][color]) {
-	//		const sf::Vector2i short_castling_king[2]{ {6, 7}, {6, 0} };	// x - 1
-	//		// check if path is under attack
+			if (newpos != sf::Vector2i(7, 7) and newpos != sf::Vector2i(0, 7))
+				return false;
 
-	//	}
-	//	});
-	//if (can_castle)
-	//	return true;
+			if (newpos == sf::Vector2i(7, 7)) {	// short castling
+				if (board.at({ 5, 7 }) or board.at({ 6, 7 }))
+					return false;
+				if (FigureMoves::isUnderAttackOf(board, sf::Vector2i(5, 7), opposite_color) or
+					FigureMoves::isUnderAttackOf(board, sf::Vector2i(6, 7), opposite_color))
+					return false;
+				// checking history
+				if (not board.getHistory().empty())
+					for (const auto& step : board.getHistory())
+						if (const auto part = std::string_view(step.begin(), step.begin() + 3);
+							part == "K40" or part == "R70")
+							return false;
+				return true;
+			}
+			else {	// long castling
+				if (board.at({ 1, 7 }) or board.at({ 2, 7 }) or board.at({ 3, 7 }))
+					return false;
+				if (FigureMoves::isUnderAttackOf(board, sf::Vector2i(2, 7), opposite_color) or
+					FigureMoves::isUnderAttackOf(board, sf::Vector2i(3, 7), opposite_color))
+					return false;
+				// checking history
+				if (not board.getHistory().empty())
+					for (const auto& step : board.getHistory())
+						if (const auto part = std::string_view(step.begin(), step.begin() + 3);
+							part == "K40" or part == "R00")
+							return false;
+				return true;
+			}
+
+		}
+
+		return false;
+		}
+	);
+	if (can_castle)
+		return Movements::Castling{};
 
 
 	if (not std::holds_alternative<Movements::Common>(Figure::canMove(newpos)) or not canAttack(newpos))

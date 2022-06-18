@@ -70,36 +70,74 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 				break;
 			}
 		},
-		[&figure](Movements::Castling) { throw; },
-		[&figure, &src, &dst, this](Movements::EnPassant) {
-			figure->move(dst);
-			auto& target = data[dst.y][dst.x];
-			target = std::move(figure);
+		[&figure, &src, &dst, this](Movements::Castling) {
+			const auto pos_y = figure->getPosition().y;
+			auto& rook = this->at(dst);
 
-			switch (target->getColor()) {
-			case Figure::Color::Black: {
-				const auto pawn_pos = sf::Vector2i(dst.x, dst.y - 1);
-				data[pawn_pos.y][pawn_pos.x].reset();
+			enum : bool {
+				short_castling = 0,
+				long_castling = 1
+			};
+			bool castling_type;
+			switch (dst.x) {
+				// short casling
+				case 7:
+					castling_type = short_castling;
+					figure->move({ 6, pos_y });
+					rook->move({ 5, pos_y });
+					this->at({ 6, pos_y }) = std::move(figure);
+					this->at({ 5, pos_y }) = std::move(rook);
+				break;
+				// long castling
+				case 0:
+					castling_type = long_castling;
+					figure->move({ 2, pos_y });
+					rook->move({ 3, pos_y });
+					this->at({ 2, pos_y }) = std::move(figure);
+					this->at({ 3, pos_y }) = std::move(rook);
 				break;
 			}
-			case Figure::Color::White: {
-				const auto pawn_pos = sf::Vector2i(dst.x, dst.y + 1);
-				data[pawn_pos.y][pawn_pos.x].reset();
-				break;
-			}
-			default: throw;
-			}
-			switch (target->getColor()) {
+			constexpr auto castling = std::array{ "0-0", "0-0-0" };
+			switch (figure->getColor()) {
 			case Figure::Color::White:
-				history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+				history.push_back(fmt::format("{}|", castling[castling_type]));
 				break;
 			case Figure::Color::Black:
-				history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+				history.back() += fmt::format("{}", castling[castling_type]);
 				std::cout << history.back() << '\n';
 				break;
+			default: throw;
 			}
 		},
-		[&figure](Movements::Illegal) { throw; }
+		[&figure, &src, &dst, this](Movements::EnPassant) {
+				figure->move(dst);
+				auto& target = data[dst.y][dst.x];
+				target = std::move(figure);
+
+				switch (target->getColor()) {
+				case Figure::Color::Black: {
+					const auto pawn_pos = sf::Vector2i(dst.x, dst.y - 1);
+					data[pawn_pos.y][pawn_pos.x].reset();
+					break;
+				}
+				case Figure::Color::White: {
+					const auto pawn_pos = sf::Vector2i(dst.x, dst.y + 1);
+					data[pawn_pos.y][pawn_pos.x].reset();
+					break;
+				}
+				default: throw;
+				}
+				switch (target->getColor()) {
+				case Figure::Color::White:
+					history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+					break;
+				case Figure::Color::Black:
+					history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+					std::cout << history.back() << '\n';
+					break;
+				}
+			},
+				[&figure](Movements::Illegal) { throw; }
 	};
 
 	std::visit(move, move_strategy);

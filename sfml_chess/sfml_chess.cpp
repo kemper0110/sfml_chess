@@ -60,7 +60,12 @@ int main()
 						if (selected) {
 							const auto& selected_figure = board.at(selected.value());
 
-							if (clicked_figure and clicked_figure->getColor() == selected_figure->getColor())
+							// color is not same or most is castling
+							// not(color is same and not castling)
+
+							if (clicked_figure and
+								clicked_figure->getColor() == selected_figure->getColor() and 
+								not std::holds_alternative<Movements::Castling>(selected_figure->canMove(clickidx)))
 								selected.emplace(clickidx);
 							else if (not std::holds_alternative<Movements::Illegal>(selected_figure->canMove(clickidx)) and clickidx != selected.value()) {
 								board.move(selected.value(), clickidx);
@@ -75,10 +80,6 @@ int main()
 									std::cout << "Mat for " << static_cast<int>(board.who_moves) << '\n';
 									window.close();
 								}
-
-								// если нет ходов у фигур => ПАТ
-								// проверить наличие ШАХА королю => следующий шаг должен предотвратить ШАХ
-								// если таких шагов нет => МАТ
 							}
 						}
 						else {

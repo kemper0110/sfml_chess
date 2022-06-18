@@ -3,7 +3,7 @@
 
 #include "Figures_fwd.h"
 
-
+#include <ranges>
 
 class King :
     public Figure
