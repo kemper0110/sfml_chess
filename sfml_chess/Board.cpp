@@ -71,7 +71,34 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 			}
 		},
 		[&figure](Movements::Castling) { throw; },
-		[&figure](Movements::EnPassant) { throw; },
+		[&figure, &src, &dst, this](Movements::EnPassant) {
+			figure->move(dst);
+			auto& target = data[dst.y][dst.x];
+			target = std::move(figure);
+
+			switch (target->getColor()) {
+			case Figure::Color::Black: {
+				const auto pawn_pos = sf::Vector2i(dst.x, dst.y - 1);
+				data[pawn_pos.y][pawn_pos.x].reset();
+				break;
+			}
+			case Figure::Color::White: {
+				const auto pawn_pos = sf::Vector2i(dst.x, dst.y + 1);
+				data[pawn_pos.y][pawn_pos.x].reset();
+				break;
+			}
+			default: throw;
+			}
+			switch (target->getColor()) {
+			case Figure::Color::White:
+				history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+				break;
+			case Figure::Color::Black:
+				history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+				std::cout << history.back() << '\n';
+				break;
+			}
+		},
 		[&figure](Movements::Illegal) { throw; }
 	};
 
@@ -126,14 +153,14 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 					figure.sprite.setPosition(sf::Vector2f{ pos * 56 });
 					break;
 				case Figure::Color::Black:
-					figure.sprite.setPosition(sf::Vector2f( (sf::Vector2i{7, 7} - pos ) * 56 ));
+					figure.sprite.setPosition(sf::Vector2f((sf::Vector2i{ 7, 7 } - pos) * 56));
 					break;
 				default:
 					throw "kwo are you?";
 				}
 
 				//sprite.setPosition(sf::Vector2f(56 * pos));
-				
+
 				target.draw(figure.sprite, states);
 				//target.draw(*cell, states);
 
