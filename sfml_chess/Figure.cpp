@@ -89,10 +89,6 @@ bool Figure::canAttack(sf::Vector2i newpos) const
 		return false;
 	return true;
 }
-//
-//void Figure::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-//	//target.draw(sprite, states);
-//}
 
 bool Figure::loadTexture() {
 	constexpr auto filename = "figures.png";

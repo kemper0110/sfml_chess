@@ -73,7 +73,7 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 		[&figure, &src, &dst, this](Movements::Castling) {
 			const auto pos_y = figure->getPosition().y;
 			auto& rook = this->at(dst);
-
+			const auto color = figure->getColor();
 			enum : bool {
 				short_castling = 0,
 				long_castling = 1
@@ -98,7 +98,7 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 				break;
 			}
 			constexpr auto castling = std::array{ "0-0", "0-0-0" };
-			switch (figure->getColor()) {
+			switch (color) {
 			case Figure::Color::White:
 				history.push_back(fmt::format("{}|", castling[castling_type]));
 				break;

@@ -23,16 +23,4 @@ bool Bishop::canAttack(sf::Vector2i newpos) const
 		return true;
 	return false;
 }
-//void Bishop::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-//	sprite.setPosition(sf::Vector2f(56 * pos));
-//
-//	switch (getColor()) {
-//	case Figure::Color::Black:
-//		sprite.setTextureRect(sf::IntRect(56 * 2, 0, 56, 56));
-//		break;
-//	case Figure::Color::White:
-//		sprite.setTextureRect(sf::IntRect(56 * 2, 56, 56, 56));
-//		break;
-//	}
-//	target.draw(sprite, states);
-//}
+

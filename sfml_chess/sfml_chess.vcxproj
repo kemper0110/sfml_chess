@@ -133,10 +133,15 @@
   <ItemGroup>
     <ClCompile Include="Bishop.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureMoves.cpp" />
+    <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="h2hChess.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="OnlineChess.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
@@ -150,13 +155,18 @@
   <ItemGroup>
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="FigureMoves.h" />
     <ClInclude Include="Figures_fwd.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Figures.h" />
+    <ClInclude Include="Frame.h" />
+    <ClInclude Include="h2hChess.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Movement.h" />
+    <ClInclude Include="OnlineChess.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="Queen.h" />
     <ClInclude Include="Rook.h" />
