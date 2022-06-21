@@ -22,8 +22,6 @@ class Engine
 	std::mutex render_mutex;
 	std::condition_variable render_cv;
 
-	// resources
-	std::shared_ptr<sf::Font> font;
 public:
 	sf::RenderWindow window;
 
@@ -33,5 +31,8 @@ public:
 	void async_rendering();
 	void invalidate_rect();
 	void set_frame(std::shared_ptr<Frame>&& frame);
+
+	// resources
+	std::shared_ptr<sf::Font> font;
 };
 

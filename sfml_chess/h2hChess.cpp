@@ -4,6 +4,8 @@
 #include "Board.h"
 #include "FigureMoves.h"
 
+#include "Endgame.h"
+
 h2hChess::h2hChess(Engine& engine) : Frame(engine), board(Figure::Color::White)
 {
 
@@ -13,6 +15,7 @@ h2hChess::h2hChess(Engine& engine) : Frame(engine), board(Figure::Color::White)
 	cs.setFillColor(movement_color);
 	cs.setOrigin(sf::Vector2f(cs.getRadius(), cs.getRadius()));
 
+	//engine.invalidate_rect();
 
 }
 
@@ -43,11 +46,13 @@ void h2hChess::process_event(sf::Event event)
 
 					if (FigureMoves::isPat(board, board.who_moves)) {
 						std::cout << "Pat for " << static_cast<int>(board.who_moves) << '\n';
-						engine.window.close();
+						engine.set_frame(std::make_shared<Endgame>(engine, false));
+						return;
 					}
 					if (FigureMoves::isMat(board, board.who_moves)) {
 						std::cout << "Mat for " << static_cast<int>(board.who_moves) << '\n';
-						engine.window.close();
+						engine.set_frame(std::make_shared<Endgame>(engine, board.playing_as != board.who_moves));
+						return;
 					}
 
 				}

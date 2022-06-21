@@ -3,14 +3,16 @@
 
 #include "Menu.h"
 
-
+#include <future>
+#include <iostream>
 
 Engine::Engine() : window(sf::VideoMode(450, 450), "Chess")
 {
 	font = std::make_shared<sf::Font>();
-	font->loadFromFile("Segoe ui bold.ttf");
+	if (!font->loadFromFile("Segoe ui bold.ttf"))
+		std::cerr << "font not found\n";
 
-	this->set_frame(std::make_shared<Menu>(*this, font));
+	this->set_frame(std::make_shared<Menu>(*this));
 
 	window.setActive(false);
 }
@@ -68,6 +70,7 @@ void Engine::set_frame(std::shared_ptr<Frame>&& frame)
 	{
 		std::unique_lock wait_until_render_stops(render_mutex);
 	}
+	const auto _ = std::async(std::launch::async, &Engine::invalidate_rect, this);	// spurious magic for working from dying thread(e.g. websocket)
 	this->frame = std::move(frame);
-	invalidate_rect();
+	//invalidate_rect();
 }

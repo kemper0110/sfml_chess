@@ -2,15 +2,14 @@
 #include "Frame.h"
 #include "Board.h"
 
+
 class h2hChess : public Frame
 {
 	std::optional<sf::Vector2i> selected;
-
-
 	sf::Color movement_color, selected_color;
 	sf::CircleShape cs;
 	Board board;
-	//std::shared_ptr<Board> board;
+
 public:
 	h2hChess(Engine& engine);
 

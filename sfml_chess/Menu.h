@@ -1,10 +1,5 @@
 #pragma once
-
-
-
 #include "Frame.h"
-
-
 
 class Menu : public Frame
 {
@@ -14,10 +9,14 @@ class Menu : public Frame
 	// quit
 	sf::Color color = sf::Color::Green;
 	sf::RectangleShape rect;
-	sf::RectangleShape button1;
-	sf::Text text;
+
+	sf::RectangleShape h2h_button;
+	sf::Text h2h_text;
+
+	sf::RectangleShape online_button;
+	sf::Text online_text;
 public:
-	Menu(Engine& engine, std::shared_ptr<sf::Font> font);
+	Menu(Engine& engine);
 
 
 		
