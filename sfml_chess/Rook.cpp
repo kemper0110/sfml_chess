@@ -18,9 +18,9 @@ bool Rook::canAttack(sf::Vector2i newpos) const
 {
 	if (not Figure::canAttack(newpos))
 		return false;
-	if (newpos.x == pos.x and FigureMoves::isHorizontalFree(board, pos, newpos)
+	if (newpos.x == pos.x and FigureMoves::isVerticalFree(board, pos, newpos)
 		or
-		newpos.y == pos.y and FigureMoves::isVerticalFree(board, pos, newpos))
+		newpos.y == pos.y and FigureMoves::isHorizontalFree(board, pos, newpos))
 		return true;
 	return false;
 }

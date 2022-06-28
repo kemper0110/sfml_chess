@@ -60,14 +60,10 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 		if (board.getHistory().empty())
 			return false;
 		const auto& last_move = board.getHistory().back();
-		constexpr auto move_size = std::array{ 6, 11 };
-		if (last_move.size() != move_size[color_flag])
-			return false;
 
 		const auto color_move = color_flag ?
 			std::string_view(last_move.begin() + last_move.find('|') + 1, last_move.end()) :		// take part of black move
 			std::string_view(last_move.begin(), last_move.begin() + last_move.find('|'));			// take part white move
-
 
 
 		constexpr auto coords = std::array{

@@ -8,6 +8,8 @@
 #include "Figures_fwd.h"
 #include "Movement.h"
 
+#include "Engine.h"
+
 
 class Board
 	:
@@ -21,13 +23,13 @@ class Board
 	// only appending to end
 	// heavy strings
 	std::list<std::string> history;
-	Board();
+	Engine& engine;
 public:
 	Figure::Color who_moves = Figure::Color::White;
 	Figure::Color playing_as;
 
 
-	Board(Figure::Color playing_as);
+	Board(Engine& engine, Figure::Color playing_as);
 	const std::unique_ptr<Figure>& at(sf::Vector2i pos) const;
 	std::unique_ptr<Figure>& at(sf::Vector2i pos);
 	void move(sf::Vector2i src, sf::Vector2i dst);
@@ -36,11 +38,5 @@ public:
 	std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& getData();
 protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	sf::Sprite sprite;
-private:
-	static bool load_texture();
-public:
-	static inline sf::Texture texture = sf::Texture();
-	static inline bool isTextureLoaded = load_texture();
 };
 

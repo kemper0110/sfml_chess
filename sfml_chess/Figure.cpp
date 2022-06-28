@@ -20,7 +20,6 @@ sf::Vector2i Figure::getPosition() const {
 }
 void Figure::move(sf::Vector2i newpos) {
 	pos = newpos;
-	sprite.setPosition(sf::Vector2f(56 * pos));
 }
 
 Movement Figure::canMove(sf::Vector2i newpos) {
@@ -87,16 +86,5 @@ bool Figure::canAttack(sf::Vector2i newpos) const
 {
 	if (newpos.x < 0 or newpos.y < 0 or newpos.x > 7 or newpos.y > 7)
 		return false;
-	return true;
-}
-
-bool Figure::loadTexture() {
-	constexpr auto filename = "figures.png";
-	return texture.loadFromFile(filename);
-}
-
-bool Figure::loadSprite()
-{
-	sprite.setTexture(texture);
 	return true;
 }

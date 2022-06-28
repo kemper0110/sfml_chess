@@ -22,6 +22,7 @@ class Engine
 	std::mutex render_mutex;
 	std::condition_variable render_cv;
 
+
 public:
 	sf::RenderWindow window;
 
@@ -34,5 +35,10 @@ public:
 
 	// resources
 	std::shared_ptr<sf::Font> font;
+
+	sf::Sprite board_sprite;
+	sf::Texture board_texture;
+	sf::Sprite figure_sprite;
+	sf::Texture figure_texture;
 };
 

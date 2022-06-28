@@ -43,8 +43,8 @@ OnlineChess::OnlineChess(Engine& engine) : Frame(engine), ws(net::make_strand(io
 		std::cout << "received: " << message << '\n';
 		if (message[0] == 'S')
 			switch (message[1]) {
-			case 'W': board = std::make_unique<Board>(Figure::Color::White); break;
-			case 'B': board = std::make_unique<Board>(Figure::Color::Black); break;
+			case 'W': board = std::make_unique<Board>(engine, Figure::Color::White); break;
+			case 'B': board = std::make_unique<Board>(engine, Figure::Color::Black); break;
 			}
 		buffer.clear();
 	} while (not board);

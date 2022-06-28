@@ -83,16 +83,16 @@ void session::handle_message(std::string_view message) {
 	}
 	case 'S':
 		// game started
-		switch (message[1]) {
-		case 'W':
-			// set side color to White 
-			board = std::make_unique<Board>(Figure::Color::White);
-			break;
-		case 'B':
-			// set side color to Black
-			board = std::make_unique<Board>(Figure::Color::Black);
-			break;
-		}
+		//switch (message[1]) {
+		//case 'W':
+		//	// set side color to White 
+		//	board = std::make_unique<Board>(engine, Figure::Color::White);
+		//	break;
+		//case 'B':
+		//	// set side color to Black
+		//	board = std::make_unique<Board>(engine, Figure::Color::Black);
+		//	break;
+		//}
 
 		// and start game
 		board_cv.notify_one();

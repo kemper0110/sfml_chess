@@ -41,13 +41,5 @@ protected:
 	//sf::Sprite sprite;
 	Board& board;
 
-private:
-	static bool loadTexture();
-	static bool loadSprite();
-public:
-	static inline sf::Texture texture = sf::Texture();
-	const static inline bool isTextureLoaded = loadTexture();
-	static inline sf::Sprite sprite = sf::Sprite();
-	const static inline bool isSpriteLoaded = loadSprite();
 };
 

@@ -6,7 +6,7 @@
 
 #include "Endgame.h"
 
-h2hChess::h2hChess(Engine& engine) : Frame(engine), board(Figure::Color::White)
+h2hChess::h2hChess(Engine& engine) : Frame(engine), board(engine, Figure::Color::White)
 {
 
 	movement_color = sf::Color(40, 255, 40, 150);

@@ -8,6 +8,14 @@
 
 Engine::Engine() : window(sf::VideoMode(450, 450), "Chess")
 {
+	constexpr char board_filename[]{ "board0.png" };
+	board_texture.loadFromFile(board_filename);
+	board_sprite.setTexture(board_texture);
+
+	constexpr char figure_filename[]{ "figures.png" };
+	figure_texture.loadFromFile(figure_filename);
+	figure_sprite.setTexture(figure_texture);
+
 	font = std::make_shared<sf::Font>();
 	if (!font->loadFromFile("Segoe ui bold.ttf"))
 		std::cerr << "font not found\n";

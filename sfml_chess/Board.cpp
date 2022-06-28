@@ -6,31 +6,25 @@ struct Overload : Lambdas... {
 	using Lambdas::operator()...;
 };
 
-Board::Board() {
-	sprite.setTexture(texture);
 
-	data = {
-		std::make_unique<Rook>(Figure::Color::Black, sf::Vector2i{0, 0}, *this), std::make_unique<Knight>(Figure::Color::Black, sf::Vector2i{1, 0}, *this), std::make_unique<Bishop>(Figure::Color::Black, sf::Vector2i{2, 0}, *this), std::make_unique<Queen>(Figure::Color::Black, sf::Vector2i{3, 0}, *this),
-		std::make_unique<King>(Figure::Color::Black, sf::Vector2i{4, 0}, *this), std::make_unique<Bishop>(Figure::Color::Black, sf::Vector2i{5, 0}, *this), std::make_unique<Knight>(Figure::Color::Black, sf::Vector2i{6, 0}, *this), std::make_unique<Rook>(Figure::Color::Black, sf::Vector2i{7, 0}, *this),
-		std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{0, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{1, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{2, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{3, 1}, *this),
-		std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{4, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{5, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{6, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{7, 1}, *this),
-
-		nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
-		nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
-		nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
-		nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
-
-		std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{0, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{1, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{2, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{3, 6}, *this),
-		std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{4, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{5, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{6, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{7, 6}, *this),
-		std::make_unique<Rook>(Figure::Color::White, sf::Vector2i{0, 7}, *this), std::make_unique<Knight>(Figure::Color::White, sf::Vector2i{1, 7}, *this), std::make_unique<Bishop>(Figure::Color::White, sf::Vector2i{2, 7}, *this), std::make_unique<Queen>(Figure::Color::White, sf::Vector2i{3, 7}, *this),
-		std::make_unique<King>(Figure::Color::White, sf::Vector2i{4, 7}, *this), std::make_unique<Bishop>(Figure::Color::White, sf::Vector2i{5, 7}, *this), std::make_unique<Knight>(Figure::Color::White, sf::Vector2i{6, 7}, *this), std::make_unique<Rook>(Figure::Color::White, sf::Vector2i{7, 7}, *this),
-	};
-}
-
-
-Board::Board(Figure::Color playing_as) : Board()
+Board::Board(Engine& engine, Figure::Color playing_as) : engine(engine), playing_as(playing_as)
 {
-	this->playing_as = playing_as;
+	data = {
+	std::make_unique<Rook>(Figure::Color::Black, sf::Vector2i{0, 0}, *this), std::make_unique<Knight>(Figure::Color::Black, sf::Vector2i{1, 0}, *this), std::make_unique<Bishop>(Figure::Color::Black, sf::Vector2i{2, 0}, *this), std::make_unique<Queen>(Figure::Color::Black, sf::Vector2i{3, 0}, *this),
+	std::make_unique<King>(Figure::Color::Black, sf::Vector2i{4, 0}, *this), std::make_unique<Bishop>(Figure::Color::Black, sf::Vector2i{5, 0}, *this), std::make_unique<Knight>(Figure::Color::Black, sf::Vector2i{6, 0}, *this), std::make_unique<Rook>(Figure::Color::Black, sf::Vector2i{7, 0}, *this),
+	std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{0, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{1, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{2, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{3, 1}, *this),
+	std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{4, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{5, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{6, 1}, *this), std::make_unique<Pawn>(Figure::Color::Black, sf::Vector2i{7, 1}, *this),
+
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+
+	std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{0, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{1, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{2, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{3, 6}, *this),
+	std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{4, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{5, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{6, 6}, *this), std::make_unique<Pawn>(Figure::Color::White, sf::Vector2i{7, 6}, *this),
+	std::make_unique<Rook>(Figure::Color::White, sf::Vector2i{0, 7}, *this), std::make_unique<Knight>(Figure::Color::White, sf::Vector2i{1, 7}, *this), std::make_unique<Bishop>(Figure::Color::White, sf::Vector2i{2, 7}, *this), std::make_unique<Queen>(Figure::Color::White, sf::Vector2i{3, 7}, *this),
+	std::make_unique<King>(Figure::Color::White, sf::Vector2i{4, 7}, *this), std::make_unique<Bishop>(Figure::Color::White, sf::Vector2i{5, 7}, *this), std::make_unique<Knight>(Figure::Color::White, sf::Vector2i{6, 7}, *this), std::make_unique<Rook>(Figure::Color::White, sf::Vector2i{7, 7}, *this),
+	};
 }
 
 const std::unique_ptr<Figure>& Board::at(sf::Vector2i pos) const {
@@ -159,9 +153,7 @@ std::array<std::array<std::unique_ptr<Figure>, 8>, 8>& Board::getData()
 }
 
 void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(sprite, states);
-	//sf::RenderTexture rtex;
-	//rtex.create()
+	target.draw(engine.board_sprite, states);
 	for (const auto& row : data) {
 		for (const auto& cell : row) {
 			if (cell) {
@@ -184,29 +176,20 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 				case Figure::Type::King: idx = 4; break;
 				default: throw "who are you?";
 				}
-				figure.sprite.setTextureRect(sf::IntRect(56 * idx, y_offset, 56, 56));
+				engine.figure_sprite.setTextureRect(sf::IntRect(56 * idx, y_offset, 56, 56));
 
 				switch (playing_as) {
 				case Figure::Color::White:
-					figure.sprite.setPosition(sf::Vector2f{ pos * 56 });
+					engine.figure_sprite.setPosition(sf::Vector2f{ pos * 56 });
 					break;
 				case Figure::Color::Black:
-					figure.sprite.setPosition(sf::Vector2f((sf::Vector2i{ 7, 7 } - pos) * 56));
+					engine.figure_sprite.setPosition(sf::Vector2f((sf::Vector2i{ 7, 7 } - pos) * 56));
 					break;
 				default:
 					throw "kwo are you?";
 				}
-
-				//sprite.setPosition(sf::Vector2f(56 * pos));
-
-				target.draw(figure.sprite, states);
-				//target.draw(*cell, states);
-
+				target.draw(engine.figure_sprite, states);
 			}
 		}
 	}
-}
-bool Board::load_texture() {
-	constexpr auto filename = "board0.png";
-	return texture.loadFromFile(filename);
 }

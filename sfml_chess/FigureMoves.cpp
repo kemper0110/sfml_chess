@@ -19,20 +19,6 @@ bool FigureMoves::isDiagonalFree(const Board& board, const sf::Vector2i& src, co
 
 bool FigureMoves::isVerticalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst)
 {
-	const auto diff = dst.x - src.x;
-	if (diff == 0)
-		return true;
-	const auto step = diff / std::abs(diff);
-
-	for (auto x = src.x + step; x != dst.x; x += step)
-		if (board.at({ x, src.y }))
-			return false;
-
-	return true;
-}
-
-bool FigureMoves::isHorizontalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst)
-{
 	const auto diff = dst.y - src.y;
 	if (diff == 0)
 		return true;
@@ -40,6 +26,20 @@ bool FigureMoves::isHorizontalFree(const Board& board, const sf::Vector2i& src, 
 
 	for (auto y = src.y + step; y != dst.y; y += step)
 		if (board.at({ src.x, y }))
+			return false;
+
+	return true;
+}
+
+bool FigureMoves::isHorizontalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst)
+{
+	const auto diff = dst.x - src.x;
+	if (diff == 0)
+		return true;
+	const auto step = diff / std::abs(diff);
+
+	for (auto x = src.x + step; x != dst.x; x += step)
+		if (board.at({ x, src.y }))
 			return false;
 
 	return true;
