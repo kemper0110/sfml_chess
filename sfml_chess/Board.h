@@ -27,7 +27,7 @@ class Board
 public:
 	Figure::Color who_moves = Figure::Color::White;
 	Figure::Color playing_as;
-
+	std::optional<sf::Vector2i> promotion;
 
 	Board(Engine& engine, Figure::Color playing_as);
 	const std::unique_ptr<Figure>& at(sf::Vector2i pos) const;

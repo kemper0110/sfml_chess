@@ -109,8 +109,8 @@ Movement King::canMove(sf::Vector2i newpos) {
 	if (not std::holds_alternative<Movements::Common>(Figure::canMove(newpos)) or not canAttack(newpos))
 		return Movements::Illegal{};
 
-	if (FigureMoves::isUnderAttackOf(board, newpos, opposite_color))
-		return Movements::Illegal{};
+	//if (FigureMoves::isUnderAttackOf(board, newpos, opposite_color))
+	//	return Movements::Illegal{};
 
 	return Movements::Common{};
 }

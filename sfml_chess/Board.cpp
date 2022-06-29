@@ -131,7 +131,24 @@ void Board::move(sf::Vector2i src, sf::Vector2i dst) {
 					break;
 				}
 			},
-				[&figure](Movements::Illegal) { throw; }
+		[&figure, &src, &dst, this](Movements::Promotion) {
+				figure->move(dst);
+				auto& target = data[dst.y][dst.x];
+				target = std::move(figure);
+
+				promotion = dst;
+
+				//switch (target->getColor()) {
+				//case Figure::Color::White:
+				//	history.push_back(fmt::format("{}{}-{}{}|", src.x, 7 - src.y, dst.x, 7 - dst.y));
+				//	break;
+				//case Figure::Color::Black:
+				//	history.back() += fmt::format("{}{}-{}{}", src.x, 7 - src.y, dst.x, 7 - dst.y);
+				//	std::cout << history.back() << '\n';
+				//	break;
+				//}
+			},
+		[&figure](Movements::Illegal) { throw; }
 	};
 
 	std::visit(move, move_strategy);

@@ -60,9 +60,6 @@
     <ClCompile Include="Frame.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="session.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Endgame.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -142,5 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="session.cpp">
+      <Filter>Исходные файлы</Filter>
+    </None>
   </ItemGroup>
 </Project>

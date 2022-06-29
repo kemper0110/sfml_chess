@@ -146,7 +146,7 @@
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
-    <ClCompile Include="session.cpp" />
+    <None Include="session.cpp" />
     <ClCompile Include="sfml_chess.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -6,17 +6,13 @@
 
 
 
-class FigureMoves
+namespace FigureMoves
 {
-public:
-	static bool isDiagonalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
-	static bool isVerticalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
-	static bool isHorizontalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
-
-	static bool isUnderAttackOf(const Board& board, const sf::Vector2i& target, const Figure::Color color);
-	static bool isPat(const Board& board, const Figure::Color color);
-	static bool isMat(Board& board, const Figure::Color color);
-
-
-	static sf::Vector2i findKingOnBoard(const Board& board, const Figure::Color color);
+	bool isDiagonalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
+	bool isVerticalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
+	bool isHorizontalFree(const Board& board, const sf::Vector2i& src, const sf::Vector2i& dst);
+	bool isUnderAttackOf(const Board& board, const sf::Vector2i& target, const Figure::Color color);
+	bool isPat(const Board& board, const Figure::Color color);
+	bool isMat(Board& board, const Figure::Color color);
+	sf::Vector2i findKingOnBoard(const Board& board, const Figure::Color color);
 };

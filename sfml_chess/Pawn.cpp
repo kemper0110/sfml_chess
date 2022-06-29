@@ -29,14 +29,21 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 		std::array{  sf::Vector2i{  0, 1  }, sf::Vector2i{  0, 2  } },	// black
 		std::array{  sf::Vector2i{  0, -1 }, sf::Vector2i{  0, -2 } },	// white
 	};
+
+	const auto promotion_pos = std::array{ 7, 0 };
+
 	// forward is clear
 	if (newpos == pos + moves[color_flag][0] and not board.at(newpos))
-		return Movements::Common{};
+		if (newpos.y == promotion_pos[color_flag])
+			return Movements::Promotion{};
+		else
+			return Movements::Common{};
 
 	// first double step with empty forward
 	if (pos.y == (color_flag == 0 ? 1 : 6) and newpos == pos + moves[color_flag][1] and
 		not board.at(newpos) and not board.at(pos + moves[color_flag][0]))	// two cells are empty
 		return Movements::Common{};
+
 
 
 	const auto can_en_passant = std::invoke([this, color_flag, newpos] {
@@ -49,7 +56,7 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 
 		// corrections for black/white directions
 		constexpr auto dir = std::array{ 1, -1 };
-		
+
 		if (
 			newpos != pos + sf::Vector2i(1, 1) * dir[color_flag] and	// left diagonal
 			newpos != pos + sf::Vector2i(-1, 1) * dir[color_flag]		// right diagonal
@@ -71,7 +78,7 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 			std::array{ '6', '4' }		// white
 		};
 		const auto dx = newpos.x - pos.x;
-		
+
 		//	double-cell step forward 
 		if (
 			color_move[0] == color_move[3] and				// x-coord is not changed
@@ -88,7 +95,10 @@ Movement Pawn::canMove(sf::Vector2i newpos) {
 		return Movements::EnPassant{};
 
 	if (board.at(newpos) and canAttack(newpos))
-		return Movements::Common{};
+		if (newpos.y == promotion_pos[color_flag])
+			return Movements::Promotion{};
+		else
+			return Movements::Common{};
 	return Movements::Illegal{};
 }
 
