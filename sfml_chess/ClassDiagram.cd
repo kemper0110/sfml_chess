@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="Bishop">
-    <Position X="0.75" Y="7.5" Width="1.5" />
+    <Position X="5.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAACQAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Bishop.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Board">
-    <Position X="8.25" Y="0.5" Width="4.5" />
+    <Position X="22.5" Y="1.5" Width="4.5" />
     <TypeIdentifier>
-      <HashCode>AEAQAAAACAAAAACAAAIQAAAAABAAAgAIgAAQACAEAgA=</HashCode>
+      <HashCode>AAAQAAAACAAAAACQAAIQAAAAAAAAAAAIgAAQACQAAgA=</HashCode>
       <FileName>Board.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Figure">
-    <Position X="1.5" Y="0.5" Width="4.5" />
+    <Position X="6.5" Y="1" Width="4.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -37,39 +37,126 @@
     </TypeIdentifier>
   </Class>
   <Class Name="King">
-    <Position X="2.75" Y="7.5" Width="1.5" />
+    <Position X="7.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>King.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Knight">
-    <Position X="0.75" Y="9.5" Width="1.5" />
+    <Position X="5.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEgAAAAAAAAACAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Knight.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Pawn">
-    <Position X="2.75" Y="9.5" Width="1.5" />
+    <Position X="7.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAggAAAAAAAACAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Pawn.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Queen">
-    <Position X="4.75" Y="7.5" Width="1.5" />
+    <Position X="9.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Queen.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Rook">
-    <Position X="4.75" Y="9.5" Width="1.5" />
+    <Position X="9.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAEAAACAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Rook.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Endgame" Collapsed="true">
+    <Position X="14.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAAAAABQAAAAAAAIACAAAAAAAAAABAAAAAQAAA=</HashCode>
+      <FileName>Endgame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine">
+    <Position X="14.75" Y="3.75" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEIAAgIAAAAACAAAAAAAgBIIQAAAAABIBAAABQAEAAI=</HashCode>
+      <FileName>Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Frame">
+    <Position X="15.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAQQAAE=</HashCode>
+      <FileName>Frame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="h2hChess" Collapsed="true">
+    <Position X="18.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAACAAAAAAAAAIBAAAgAYAAA=</HashCode>
+      <FileName>h2hChess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu" Collapsed="true">
+    <Position X="12.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAKACAAAAIAACAAAAAAAgQAAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineChess" Collapsed="true">
+    <Position X="16.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAQACAAAAABgAAIRBAAgQYQAA=</HashCode>
+      <FileName>OnlineChess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Overload&lt;...Lambdas&gt;" Collapsed="true">
+    <Position X="24" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Board.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Movements::Illegal" Collapsed="true">
+    <Position X="22.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Movements::Common" Collapsed="true">
+    <Position X="24" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Movements::Castling" Collapsed="true">
+    <Position X="22.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Movements::EnPassant" Collapsed="true">
+    <Position X="25.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Movements::Promotion" Collapsed="true">
+    <Position X="25.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Movement.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

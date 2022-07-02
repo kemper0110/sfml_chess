@@ -146,7 +146,6 @@
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
-    <None Include="session.cpp" />
     <ClCompile Include="sfml_chess.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,7 +172,6 @@
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="Queen.h" />
     <ClInclude Include="Rook.h" />
-    <ClInclude Include="session.h" />
     <ClInclude Include="Vector2Utils.h" />
   </ItemGroup>
   <ItemGroup>
