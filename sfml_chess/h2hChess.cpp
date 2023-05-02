@@ -1,10 +1,14 @@
 #include "h2hChess.h"
 
-#include "Figures.h"
 #include "Board.h"
 #include "FigureMoves.h"
 
 #include "Endgame.h"
+
+#include "Queen.h"
+#include "Rook.h"
+#include "Knight.h"
+#include "Bishop.h"
 
 h2hChess::h2hChess(Engine& engine) : Frame(engine), board(engine, Figure::Color::White)
 {

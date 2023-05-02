@@ -1,6 +1,13 @@
 #include "Board.h"
 
 
+#include "Rook.h"
+#include "King.h"
+#include "Pawn.h"
+#include "Knight.h"
+#include "Bishop.h"
+#include "Queen.h"
+
 template<typename... Lambdas>
 struct Overload : Lambdas... {
 	using Lambdas::operator()...;

@@ -1,13 +1,12 @@
 #pragma once
-#include "Figures.h"
 #include <array>
 #include <list>
 #include <iostream>
+#include <optional>
 #include <fmt/format.h>
 
-#include "Figures_fwd.h"
 #include "Movement.h"
-
+#include "Figure.h"
 #include "Engine.h"
 
 

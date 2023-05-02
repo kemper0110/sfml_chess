@@ -1,6 +1,7 @@
 #include "Endgame.h"
-
 #include "Menu.h"
+#include "Engine.h"
+
 
 Endgame::Endgame(Engine& engine, bool win) : Frame(engine), win(win)
 {

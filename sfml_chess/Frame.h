@@ -1,17 +1,14 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-
-class Engine;
-
-#include "Engine.h"
-
+namespace sf {
+	class Event;
+}
 
 class Frame
 {
 protected:
-	Engine& engine;
+	class Engine& engine;
 public:
-	Frame(Engine& engine);
+	Frame(class Engine& engine);
 	virtual void process_event(sf::Event event) = 0;
 	virtual void render() = 0;
 	virtual ~Frame() = default;

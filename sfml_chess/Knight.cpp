@@ -2,7 +2,7 @@
 #include "FigureMoves.h"
 #include "Board.h"
 
-Knight::Knight(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Knight, color, pos, 'N', board) {}
+Knight::Knight(Figure::Color color, sf::Vector2i pos, class Board& board) : Figure(Figure::Type::Knight, color, pos, 'N', board) {}
 
 std::unique_ptr<Figure> Knight::clone() const {
 	return std::make_unique<Knight>(this->getColor(), getPosition(), board);

@@ -1,11 +1,16 @@
 #include "OnlineChess.h"
 
-#include "Figures.h"
 #include "Board.h"
 #include "FigureMoves.h"
 
 #include "Endgame.h"
 
+#include <queue>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <string>
 
 OnlineChess::OnlineChess(Engine& engine) : Frame(engine), ws(net::make_strand(ioc))
 {

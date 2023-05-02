@@ -1,7 +1,6 @@
 #include "Figure.h"
 #include "Board.h"
 #include "FigureMoves.h"
-#include "Movement.h"
 
 Figure::Figure(Type type, Color color, sf::Vector2i pos, char mark, Board& board) : type(type), color(color), pos(pos), mark(mark), board(board){}
 Figure::~Figure(){}

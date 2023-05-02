@@ -1,10 +1,6 @@
 #include "Engine.h"
-//#include "Frame.h"
-
 #include "Menu.h"
 
-#include <future>
-#include <iostream>
 
 Engine::Engine() : window(sf::VideoMode(450, 450), "Chess")
 {

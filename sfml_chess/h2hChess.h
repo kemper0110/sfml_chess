@@ -11,7 +11,7 @@ class h2hChess : public Frame
 	Board board;
 
 public:
-	h2hChess(Engine& engine);
+	h2hChess(class Engine& engine);
 
 	// Унаследовано через Frame
 	virtual void process_event(sf::Event event) override;

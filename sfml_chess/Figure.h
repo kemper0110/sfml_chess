@@ -1,10 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <memory>
-
-#include "Figures_fwd.h"
-//#include "FigureMoves.h"
+#include <SFML/System/Vector2.hpp>
 #include "Movement.h"
+
+
 
 
 class Figure
@@ -20,7 +19,7 @@ public:
 		Null, White, Black
 	};
 
-	Figure(Type type, Color color, sf::Vector2i pos, char mark, Board& board);
+	Figure(Type type, Color color, sf::Vector2i pos, char mark, class Board& board);
 	virtual ~Figure();
 	char getMark() const;
 
@@ -39,7 +38,7 @@ private:
 protected:
 	sf::Vector2i pos;
 	//sf::Sprite sprite;
-	Board& board;
+	class Board& board;
 
 };
 

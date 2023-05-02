@@ -2,7 +2,7 @@
 #include "FigureMoves.h"
 #include "Board.h"
 
-Queen::Queen(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Queen, color, pos, 'Q', board) {}
+Queen::Queen(Figure::Color color, sf::Vector2i pos, class Board& board) : Figure(Figure::Type::Queen, color, pos, 'Q', board) {}
 
 std::unique_ptr<Figure> Queen::clone() const {
 	return std::make_unique<Queen>(this->getColor(), getPosition(), board);

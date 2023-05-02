@@ -13,55 +13,73 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Figures">
+      <UniqueIdentifier>{9e991715-2f10-4c39-9e11-e8f28ad75f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\utils">
+      <UniqueIdentifier>{b2765e23-bf15-4e80-926c-f10fd3be5b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Frames">
+      <UniqueIdentifier>{4eca0841-a87d-4d7b-b0b4-453055cee00b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Figures">
+      <UniqueIdentifier>{6d5ca0e6-95f8-4568-ad8e-7039c619b639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Frames">
+      <UniqueIdentifier>{89f65f5e-9dc4-4219-8728-c54b4546f40e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\utils">
+      <UniqueIdentifier>{6de8d036-94f8-43bb-b552-53bb891d003e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sfml_chess.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Pawn.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="King.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Queen.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Rook.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Bishop.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Figure.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Board.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="FigureMoves.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="OnlineChess.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="h2hChess.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Bishop.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Figure.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="FigureMoves.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="King.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Queen.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Rook.cpp">
+      <Filter>Исходные файлы\Figures</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Исходные файлы\Frames</Filter>
+    </ClCompile>
     <ClCompile Include="Frame.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Frames</Filter>
     </ClCompile>
     <ClCompile Include="Endgame.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Frames</Filter>
+    </ClCompile>
+    <ClCompile Include="h2hChess.cpp">
+      <Filter>Исходные файлы\Frames</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineChess.cpp">
+      <Filter>Исходные файлы\Frames</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,62 +94,56 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Figure.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Pawn.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Bishop.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Knight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Rook.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="King.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Queen.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Board.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Figures_fwd.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Bishop.h">
+      <Filter>Файлы заголовков\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Файлы заголовков\Figures</Filter>
     </ClInclude>
     <ClInclude Include="FigureMoves.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Figures</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2Utils.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="King.h">
+      <Filter>Файлы заголовков\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Файлы заголовков\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>Файлы заголовков\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Queen.h">
+      <Filter>Файлы заголовков\Figures</Filter>
+    </ClInclude>
+    <ClInclude Include="Rook.h">
+      <Filter>Файлы заголовков\Figures</Filter>
     </ClInclude>
     <ClInclude Include="Movement.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Figures</Filter>
     </ClInclude>
-    <ClInclude Include="OnlineChess.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="Vector2Utils.h">
+      <Filter>Файлы заголовков\utils</Filter>
     </ClInclude>
     <ClInclude Include="h2hChess.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Frames</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineChess.h">
+      <Filter>Файлы заголовков\Frames</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Frames</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Файлы заголовков\Frames</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Endgame.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Frames</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

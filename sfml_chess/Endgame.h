@@ -1,5 +1,8 @@
 #pragma once
 #include "Frame.h"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 class Endgame :
     public Frame
 {
@@ -13,7 +16,7 @@ class Endgame :
 
     sf::Text sentence_text;
 public:
-    Endgame(Engine& engine, bool win);
+    Endgame(class Engine& engine, bool win);
 
 
 

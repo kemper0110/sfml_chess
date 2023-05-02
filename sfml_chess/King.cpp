@@ -2,8 +2,9 @@
 #include "FigureMoves.h"
 #include "Board.h"
 
+#include <ranges>
 
-King::King(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::King, color, pos, 'K', board) {}
+King::King(Figure::Color color, sf::Vector2i pos, class Board& board) : Figure(Figure::Type::King, color, pos, 'K', board) {}
 
 std::unique_ptr<Figure> King::clone() const {
 	return std::make_unique<King>(this->getColor(), getPosition(), board);

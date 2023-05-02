@@ -1,6 +1,11 @@
 #pragma once
 #include "Frame.h"
 
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+
+
 class Menu : public Frame
 {
 	// play from hand to hand
@@ -16,7 +21,7 @@ class Menu : public Frame
 	sf::RectangleShape online_button;
 	sf::Text online_text;
 public:
-	Menu(Engine& engine);
+	Menu(class Engine& engine);
 
 
 		

@@ -3,7 +3,7 @@
 #include "Board.h"
 
 
-Pawn::Pawn(Figure::Color color, sf::Vector2i pos, Board& board) : Figure(Figure::Type::Pawn, color, pos, ' ', board) {}
+Pawn::Pawn(Figure::Color color, sf::Vector2i pos, class Board& board) : Figure(Figure::Type::Pawn, color, pos, ' ', board) {}
 
 std::unique_ptr<Figure> Pawn::clone() const {
 	return std::make_unique<Pawn>(getColor(), getPosition(), board);
